@@ -35,8 +35,11 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-<!--        <table schema="honorcollege" tableName="user" domainObjectName="User">-->
-<!--        </table>-->
+        <table schema="honorcollege" tableName="student_info" domainObjectName="Student">
+        </table>
+
+        <table schema="honorcollege" tableName="teacher_info" domainObjectName="Teacher">
+        </table>
 
     </context>
 </generatorConfiguration>
