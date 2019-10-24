@@ -4,14 +4,15 @@ import com.alibaba.excel.EasyExcel;
 import com.ayang818.honor.datacollection.controller.ExcelController;
 import com.ayang818.honor.datacollection.dto.excel.StudentExcelDTO;
 import com.ayang818.honor.datacollection.dto.excel.TeacherExcelDTO;
-import com.ayang818.honor.datacollection.model.Teacher;
+import com.ayang818.honor.datacollection.util.StudentExcelDataListener;
+import com.ayang818.honor.datacollection.util.TeacherExcelDataListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @ClassName ImportExcelService
@@ -22,19 +23,15 @@ import java.io.*;
 @Service
 public class ImportExcelService {
 
-    @Value("${data.excel.path}")
-    private String excelFolderPath;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ExcelController.class);
-
 
     public void readStudentExcelFile(MultipartFile excelFile) throws IOException {
         InputStream input = excelFile.getInputStream();
-        EasyExcel.read(input, StudentExcelDTO.class, new ExcelDataListener()).sheet().doRead();
+        EasyExcel.read(input, StudentExcelDTO.class, new StudentExcelDataListener()).sheet().doRead();
     }
 
     public void readTeacherExcelFile(MultipartFile excelFile) throws IOException {
         InputStream input = excelFile.getInputStream();
-        EasyExcel.read(input, TeacherExcelDTO.class, new ExcelDataListener()).sheet().doRead();
+        EasyExcel.read(input, TeacherExcelDTO.class, new TeacherExcelDataListener()).sheet().doRead();
     }
 }

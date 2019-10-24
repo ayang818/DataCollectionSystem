@@ -1,0 +1,1 @@
+alter table student_info modify school_number int null;
