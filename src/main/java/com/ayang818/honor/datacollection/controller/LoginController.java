@@ -2,9 +2,14 @@ package com.ayang818.honor.datacollection.controller;
 
 import com.ayang818.honor.datacollection.dto.login.LoginDTO;
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
+import com.ayang818.honor.datacollection.mapper.StudentMapper;
+import com.ayang818.honor.datacollection.model.Student;
+import com.ayang818.honor.datacollection.model.StudentExample;
+import com.ayang818.honor.datacollection.service.StudentService;
 import com.ayang818.honor.datacollection.util.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,6 +21,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class LoginController {
+
+    @Autowired
+    private StudentMapper studentMapper;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     @ResponseBody

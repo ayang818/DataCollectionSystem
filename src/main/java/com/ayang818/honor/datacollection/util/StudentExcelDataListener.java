@@ -11,6 +11,7 @@ import com.ayang818.honor.datacollection.service.TeacherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,11 @@ import java.util.List;
  * @Author 杨丰畅
  * @Date 2019/10/24 18:50
  **/
+@Component
 public class StudentExcelDataListener extends AnalysisEventListener<StudentExcelDTO> {
+
+    @Autowired
+    private StudentService studentService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TeacherExcelDataListener.class);
     /**
@@ -52,7 +57,6 @@ public class StudentExcelDataListener extends AnalysisEventListener<StudentExcel
      */
     private void saveData() {
         LOGGER.info("{}条数据，开始存储数据库！", list.size());
-        StudentService studentService = new StudentService();
         studentService.insertAll(list);
         LOGGER.info("存储数据库成功！");
     }

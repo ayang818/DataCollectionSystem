@@ -8,6 +8,7 @@ import com.ayang818.honor.datacollection.util.StudentExcelDataListener;
 import com.ayang818.honor.datacollection.util.TeacherExcelDataListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,15 +24,21 @@ import java.io.InputStream;
 @Service
 public class ImportExcelService {
 
+    @Autowired
+    private StudentExcelDataListener studentExcelDataListener;
+
+    @Autowired
+    private TeacherExcelDataListener teacherExcelDataListener;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ExcelController.class);
 
     public void readStudentExcelFile(MultipartFile excelFile) throws IOException {
         InputStream input = excelFile.getInputStream();
-        EasyExcel.read(input, StudentExcelDTO.class, new StudentExcelDataListener()).sheet().doRead();
+        EasyExcel.read(input, StudentExcelDTO.class, studentExcelDataListener).sheet().doRead();
     }
 
     public void readTeacherExcelFile(MultipartFile excelFile) throws IOException {
         InputStream input = excelFile.getInputStream();
-        EasyExcel.read(input, TeacherExcelDTO.class, new TeacherExcelDataListener()).sheet().doRead();
+        EasyExcel.read(input, TeacherExcelDTO.class, teacherExcelDataListener).sheet().doRead();
     }
 }
