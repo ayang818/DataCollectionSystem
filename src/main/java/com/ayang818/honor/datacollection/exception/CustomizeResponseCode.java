@@ -8,9 +8,11 @@ package com.ayang818.honor.datacollection.exception;
  **/
 public enum CustomizeResponseCode implements ICustomizeResponseCode {
     // 请求成功
-    isSuccess(200, "success"),
+    isSuccess(200, "成功"),
     // 服务端错误
-    isServerError(500, "server error");
+    isServerError(500, "服务端错误"),
+    isReadExcelError(500, "读取excel错误"),
+    upLoadError(500, "文件上传失败");
 
     private Integer code;
     private String message;

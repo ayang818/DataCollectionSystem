@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public class JSONUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(JSONUtil.class);
 
-    public static Object parseEnumToJson(Object object) {
+    public static String parseEnumToJson(Object object) {
         SerializeConfig config = new SerializeConfig();
         try {
             config.configEnumAsJavaBean((Class<? extends Enum>) object.getClass());
@@ -23,5 +23,9 @@ public class JSONUtil {
             throw new RuntimeException(e);
         }
         return JSON.toJSONString(object, config);
+    }
+
+    public static String parseObjectToJson(Object object) {
+        return JSON.toJSONString(object);
     }
 }

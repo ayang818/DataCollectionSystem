@@ -1,4 +1,4 @@
-package com.ayang818.honor.datacollection.dto;
+package com.ayang818.honor.datacollection.dto.login;
 
 import lombok.Data;
 
