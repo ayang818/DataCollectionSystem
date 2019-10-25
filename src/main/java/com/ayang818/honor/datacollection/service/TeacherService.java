@@ -24,7 +24,7 @@ public class TeacherService {
         for (int i = 0; i < list.size(); i++) {
             Teacher teacher = new Teacher();
             TeacherExcelDTO entry = list.get(i);
-            teacher.setName(entry.getName());
+            teacher.setTeacherName(entry.getName());
             teacher.setStudentNum(entry.getStudentNum());
             teacherMapper.insert(teacher);
         }

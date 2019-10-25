@@ -53,7 +53,7 @@ public class LoginController {
         }
         // 首次登入系统
         User user = new User();
-        user.setName(student.getName());
+        user.setStudentName(student.getStudentName());
         user.setUsername(student.getSchoolNumber());
         user.setPassword(String.valueOf(user.getUsername()));
         user.setGmtCreate(new Date(System.currentTimeMillis()));
