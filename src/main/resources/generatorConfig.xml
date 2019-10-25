@@ -40,7 +40,22 @@
         <table schema="honorcollege" tableName="teacher_info" domainObjectName="Teacher">
         </table>
 
-        <table schema="honorcollege" tableName="user" domainObjectName="User">
+        <table schema="honorcollege" tableName="user_info" domainObjectName="User">
+        </table>
+
+        <table schema="honorcollege" tableName="competition_honor" domainObjectName="CompetionHonor">
+        </table>
+
+        <table schema="honorcollege" tableName="ability_honor" domainObjectName="AbilityHonor">
+        </table>
+
+        <table schema="honorcollege" tableName="competition_honor" domainObjectName="CompetitionHonor">
+        </table>
+
+        <table schema="honorcollege" tableName="knowledge_honor" domainObjectName="KnowledgeHonor">
+        </table>
+
+        <table schema="honorcollege" tableName="paper_honor" domainObjectName="PaperHonor">
         </table>
 
     </context>
