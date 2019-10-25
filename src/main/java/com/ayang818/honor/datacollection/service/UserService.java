@@ -1,5 +1,8 @@
 package com.ayang818.honor.datacollection.service;
 
+import com.ayang818.honor.datacollection.dto.login.LoginDTO;
+import com.ayang818.honor.datacollection.exception.CustomizeException;
+import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
 import com.ayang818.honor.datacollection.mapper.UserMapper;
 import com.ayang818.honor.datacollection.model.User;
 import com.ayang818.honor.datacollection.model.UserExample;
@@ -19,11 +22,19 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public String checkIfFirstLogin(Integer username) {
+    public String checkIfFirstLogin(LoginDTO loginDTO) {
         UserExample example = new UserExample();
-        example.createCriteria().andUsernameEqualTo(username);
+        example.createCriteria().andUsernameEqualTo(loginDTO.getUsername());
         List<User> users = userMapper.selectByExample(example);
-        return users != null ? users.get(0).getToken() : null;
+        if (users != null && users.size() > 0) {
+            if (users.get(0).getPassword().equals(loginDTO.getPassword())) {
+                return users.get(0).getToken();
+            }
+            else {
+                throw new CustomizeException(CustomizeResponseCode.PASSWORD_ERROR);
+            }
+        }
+        return null;
     }
 
     public void insert(User user) {

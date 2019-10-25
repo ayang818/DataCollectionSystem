@@ -26,7 +26,7 @@ public class RegisterService {
         StudentExample example = new StudentExample();
         example.createCriteria().andSchoolNumberEqualTo(loginDTO.getUsername());
         List<Student> students = studentMapper.selectByExample(example);
-        return students!=null ? students.get(0) : null;
+        return students!=null && students.size()>0 ? students.get(0) : null;
     }
 
 }

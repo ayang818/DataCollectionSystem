@@ -13,7 +13,8 @@ public enum CustomizeResponseCode implements ICustomizeResponseCode {
     SERVER_ERROR(500, "服务端错误"),
     READ_EXCEL_FAILED(500, "读取excel错误"),
     UPLOAD_FAILED(500, "文件上传失败"),
-    USER_ISNOT_EXISTS(405, "用户不存在，请联系教师添加信息");
+    USER_ISNOT_EXISTS(405, "用户不存在，请联系教师添加信息"),
+    PASSWORD_ERROR(422, "密码错误");
 
     private Integer code;
     private String message;

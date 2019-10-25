@@ -2,6 +2,7 @@ package com.ayang818.honor.datacollection.controller;
 
 import com.ayang818.honor.datacollection.dto.login.LoginDTO;
 import com.ayang818.honor.datacollection.dto.login.LoginSuccessDTO;
+import com.ayang818.honor.datacollection.exception.CustomizeException;
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
 import com.ayang818.honor.datacollection.model.Student;
 import com.ayang818.honor.datacollection.model.User;
@@ -40,10 +41,10 @@ public class LoginController {
         // 检查学生数据库中有没有这个学号
         Student student = registerService.checkIfUserExists(loginDTO);
         if (student == null) {
-            return JSONUtil.parseEnumToJson(CustomizeResponseCode.USER_ISNOT_EXISTS);
+            throw new CustomizeException(CustomizeResponseCode.USER_ISNOT_EXISTS);
         }
         // 检查是否登陆过
-        String token = userService.checkIfFirstLogin(student.getSchoolNumber());
+        String token = userService.checkIfFirstLogin(loginDTO);
         if (token != null) {
             LoginSuccessDTO loginSuccessDTO = new LoginSuccessDTO();
             loginSuccessDTO.setCode(200);

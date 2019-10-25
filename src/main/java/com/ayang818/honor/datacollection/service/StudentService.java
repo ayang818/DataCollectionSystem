@@ -31,6 +31,7 @@ public class StudentService {
             StudentExcelDTO entry = (StudentExcelDTO) list.get(i);
             if (entry != null) {
                 BeanUtils.copyProperties(entry, student);
+                student.setStudentName(entry.getName());
                 student.setSex((byte) (Objects.equals(entry.getSex(), "男") ? 1 : 0));
                 studentMapper.insert(student);
             }
