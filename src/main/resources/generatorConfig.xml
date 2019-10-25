@@ -20,18 +20,17 @@
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
-        <!--        重建model-->
         <javaModelGenerator targetPackage="com.ayang818.honor.datacollection.model" targetProject="src\main\java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!--        生成sqlMapper-->
-        <sqlMapGenerator targetPackage="mapper" targetProject="src\main\java">
+        <sqlMapGenerator targetPackage="mapper" targetProject="src\main\resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.ayang818.honor.datacollection.mapper"
-                             targetProject="src\main\resources">
+                             targetProject="src\main\java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
@@ -39,6 +38,9 @@
         </table>
 
         <table schema="honorcollege" tableName="teacher_info" domainObjectName="Teacher">
+        </table>
+
+        <table schema="honorcollege" tableName="user" domainObjectName="User">
         </table>
 
     </context>

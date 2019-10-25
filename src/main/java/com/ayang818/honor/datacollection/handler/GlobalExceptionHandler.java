@@ -29,6 +29,6 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = MultipartException.class)
     public String jsonUploadErrorErrorHandler(HttpServletRequest req, MultipartException e) throws Exception {
-        return JSONUtil.parseEnumToJson(CustomizeResponseCode.upLoadError);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.UPLOAD_FAILED);
     }
 }

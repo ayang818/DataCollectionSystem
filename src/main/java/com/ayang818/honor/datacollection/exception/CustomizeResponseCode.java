@@ -8,11 +8,12 @@ package com.ayang818.honor.datacollection.exception;
  **/
 public enum CustomizeResponseCode implements ICustomizeResponseCode {
     // 请求成功
-    isSuccess(200, "成功"),
+    SUCCESS(200, "成功"),
     // 服务端错误
-    isServerError(500, "服务端错误"),
-    isReadExcelError(500, "读取excel错误"),
-    upLoadError(500, "文件上传失败");
+    SERVER_ERROR(500, "服务端错误"),
+    READ_EXCEL_FAILED(500, "读取excel错误"),
+    UPLOAD_FAILED(500, "文件上传失败"),
+    USER_ISNOT_EXISTS(405, "用户不存在，请联系教师添加信息");
 
     private Integer code;
     private String message;
