@@ -2,18 +2,19 @@ package com.ayang818.honor.datacollection.controller;
 
 import com.ayang818.honor.datacollection.dto.login.LoginDTO;
 import com.ayang818.honor.datacollection.dto.login.LoginSuccessDTO;
+import com.ayang818.honor.datacollection.dto.user.UserInfoDTO;
 import com.ayang818.honor.datacollection.exception.CustomizeException;
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
 import com.ayang818.honor.datacollection.model.Student;
 import com.ayang818.honor.datacollection.model.User;
 import com.ayang818.honor.datacollection.service.RegisterService;
 import com.ayang818.honor.datacollection.service.UserService;
-import com.ayang818.honor.datacollection.util.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.UUID;
 
@@ -32,8 +33,6 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     @ResponseBody
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
@@ -67,5 +66,19 @@ public class LoginController {
         loginSuccessDTO.setMessage(CustomizeResponseCode.SUCCESS.getMessage());
         loginSuccessDTO.setToken(token1);
         return loginSuccessDTO;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "api/user", method = RequestMethod.GET)
+    public UserInfoDTO getUserInfo(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        try {
+            userInfoDTO.setStudentName(user.getStudentName());
+            userInfoDTO.setUsername(user.getUsername());
+        } catch (NullPointerException e) {
+            throw new CustomizeException(CustomizeResponseCode.USER_ISNOT_EXISTS);
+        }
+        return userInfoDTO;
     }
 }
