@@ -2,6 +2,7 @@ package com.ayang818.honor.datacollection.controller;
 
 import com.ayang818.honor.datacollection.dto.login.LoginDTO;
 import com.ayang818.honor.datacollection.dto.login.LoginSuccessDTO;
+import com.ayang818.honor.datacollection.dto.user.EditProfileReceiveDTO;
 import com.ayang818.honor.datacollection.dto.user.UserInfoDTO;
 import com.ayang818.honor.datacollection.exception.CustomizeException;
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
@@ -9,8 +10,7 @@ import com.ayang818.honor.datacollection.model.Student;
 import com.ayang818.honor.datacollection.model.User;
 import com.ayang818.honor.datacollection.service.RegisterService;
 import com.ayang818.honor.datacollection.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.ayang818.honor.datacollection.util.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +26,7 @@ import java.util.UUID;
  **/
 
 @RestController
-public class LoginController {
+public class UserController {
 
     @Autowired
     private RegisterService registerService;
@@ -34,7 +34,6 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @ResponseBody
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public Object login(@RequestBody LoginDTO loginDTO) {
         // 检查学生数据库中有没有这个学号
@@ -68,8 +67,7 @@ public class LoginController {
         return loginSuccessDTO;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "api/user", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/user", method = RequestMethod.GET)
     public UserInfoDTO getUserInfo(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         UserInfoDTO userInfoDTO = new UserInfoDTO();
@@ -80,5 +78,12 @@ public class LoginController {
             throw new CustomizeException(CustomizeResponseCode.USER_ISNOT_EXISTS);
         }
         return userInfoDTO;
+    }
+
+    @RequestMapping(value = "/api/profile/edit", method = RequestMethod.POST)
+    public String updatePassword(@RequestBody EditProfileReceiveDTO receiveDTO, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        userService.updateUserPassword(user, receiveDTO);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 }
