@@ -1,10 +1,10 @@
 package com.ayang818.honor.datacollection.controller;
 
-import com.ayang818.honor.datacollection.dto.honor.CompetitionHonorReceiveDTO;
-import com.ayang818.honor.datacollection.dto.honor.PaperHonorReceiveDTO;
+import com.ayang818.honor.datacollection.dto.honor.*;
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
 import com.ayang818.honor.datacollection.exception.ICustomizeResponseCode;
 import com.ayang818.honor.datacollection.model.Admin;
+import com.ayang818.honor.datacollection.model.KnowledgeHonor;
 import com.ayang818.honor.datacollection.model.TotalHonor;
 import com.ayang818.honor.datacollection.model.User;
 import com.ayang818.honor.datacollection.service.HonorService;
@@ -59,6 +59,27 @@ public class HonorController {
     public String editPaperHonor(@RequestBody PaperHonorReceiveDTO receiveDTO, HttpServletRequest request) {
         User user = GetUserTypeUtil.getUser(request);
         honorService.insertPaperHonor(user, receiveDTO);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
+    }
+
+    @RequestMapping(value = "/api/honor/edit/knowledge", method = RequestMethod.POST)
+    public String editKnowledgeHonor(@RequestBody KnowledgeHonorReceiveDTO receiveDTO, HttpServletRequest request) {
+        User user = GetUserTypeUtil.getUser(request);
+        honorService.insertKnowledgeHonor(user, receiveDTO);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
+    }
+
+    @RequestMapping(value = "/api/honor/edit/ability", method = RequestMethod.POST)
+    public String editKnowledgeHonor(@RequestBody AbilityHonorReceiveDTO receiveDTO, HttpServletRequest request) {
+        User user = GetUserTypeUtil.getUser(request);
+        honorService.insertAbilityHonor(user, receiveDTO);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
+    }
+
+    @RequestMapping(value = "/api/honor/edit/graduation", method = RequestMethod.POST)
+    public String editKnowledgeHonor(@RequestBody GraduationReceiveDTO receiveDTO, HttpServletRequest request) {
+        User user = GetUserTypeUtil.getUser(request);
+        honorService.insertGraduationHonor(user, receiveDTO);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 }

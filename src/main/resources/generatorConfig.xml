@@ -47,7 +47,7 @@
         </table>
         <table schema="honorcollege" tableName="competition_honor" domainObjectName="CompetitionHonor">
         </table>
-        <table schema="honorcollege" tableName="gradution" domainObjectName="Graduation">
+        <table schema="honorcollege" tableName="graduation" domainObjectName="Graduation">
         </table>
         <table schema="honorcollege" tableName="knowledge_honor" domainObjectName="KnowledgeHonor">
         </table>
