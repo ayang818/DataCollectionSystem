@@ -4,10 +4,13 @@ import com.ayang818.honor.datacollection.dto.login.LoginDTO;
 import com.ayang818.honor.datacollection.dto.login.LoginSuccessDTO;
 import com.ayang818.honor.datacollection.dto.user.EditProfileReceiveDTO;
 import com.ayang818.honor.datacollection.dto.user.UserInfoDTO;
+import com.ayang818.honor.datacollection.enumdata.UserDataEnum;
 import com.ayang818.honor.datacollection.exception.CustomizeException;
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
+import com.ayang818.honor.datacollection.model.Admin;
 import com.ayang818.honor.datacollection.model.Student;
 import com.ayang818.honor.datacollection.model.User;
+import com.ayang818.honor.datacollection.service.AdminService;
 import com.ayang818.honor.datacollection.service.RegisterService;
 import com.ayang818.honor.datacollection.service.UserService;
 import com.ayang818.honor.datacollection.util.JSONUtil;
@@ -34,8 +37,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
-    public Object login(@RequestBody LoginDTO loginDTO) {
+    @Autowired
+    private AdminService adminService;
+
+    @RequestMapping(value = "/api/login/user", method = RequestMethod.POST)
+    public Object loginAsUser(@RequestBody LoginDTO loginDTO) {
+        System.out.println(loginDTO.getUsername());
         // 检查学生数据库中有没有这个学号
         Student student = registerService.checkIfUserExists(loginDTO);
         if (student == null) {
@@ -57,6 +64,7 @@ public class UserController {
         user.setPassword(String.valueOf(user.getUsername()));
         user.setGmtCreate(new Date(System.currentTimeMillis()));
         user.setGmtModified(user.getGmtCreate());
+        user.setType(UserDataEnum.USERTYPE);
         String token1 = UUID.randomUUID().toString();
         user.setToken(token1);
         userService.insert(user);
@@ -67,15 +75,38 @@ public class UserController {
         return loginSuccessDTO;
     }
 
+    @RequestMapping(value = "/api/login/admin", method = RequestMethod.POST)
+    public Object loginAsAdmin(@RequestBody LoginDTO loginDTO) {
+        // 管理员权限登陆
+        String token = adminService.checkIfExists(loginDTO);
+        LoginSuccessDTO loginSuccessDTO = new LoginSuccessDTO();
+        loginSuccessDTO.setCode(200);
+        loginSuccessDTO.setMessage(CustomizeResponseCode.SUCCESS.getMessage());
+        loginSuccessDTO.setToken(token);
+        return loginSuccessDTO;
+    }
+
     @RequestMapping(value = "/api/user", method = RequestMethod.GET)
     public UserInfoDTO getUserInfo(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
+        byte type = (byte) request.getSession().getAttribute("type");
         UserInfoDTO userInfoDTO = new UserInfoDTO();
-        try {
-            userInfoDTO.setStudentName(user.getStudentName());
-            userInfoDTO.setUsername(user.getUsername());
-        } catch (NullPointerException e) {
-            throw new CustomizeException(CustomizeResponseCode.USER_ISNOT_EXISTS);
+        if (type == UserDataEnum.USERTYPE) {
+            User user = (User) request.getSession().getAttribute("user");
+            try {
+                userInfoDTO.setStudentName(user.getStudentName());
+                userInfoDTO.setUsername(String.valueOf(user.getUsername()));
+                userInfoDTO.setType((int) user.getType());
+            } catch (NullPointerException e) {
+                throw new CustomizeException(CustomizeResponseCode.USER_ISNOT_EXISTS);
+            }
+        } else if (type == UserDataEnum.ADMINTYPE) {
+            Admin admin = (Admin) request.getSession().getAttribute("user");
+            try {
+                userInfoDTO.setUsername(admin.getUsername());
+                userInfoDTO.setType((int) admin.getType());
+            } catch (NullPointerException e) {
+                throw new CustomizeException(CustomizeResponseCode.USER_ISNOT_EXISTS);
+            }
         }
         return userInfoDTO;
     }

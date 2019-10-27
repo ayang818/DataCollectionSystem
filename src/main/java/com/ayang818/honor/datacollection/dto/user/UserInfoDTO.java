@@ -11,5 +11,6 @@ import lombok.Data;
 @Data
 public class UserInfoDTO {
     private String studentName;
-    private Integer username;
+    private String username;
+    private Integer type;
 }

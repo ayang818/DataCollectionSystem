@@ -26,7 +26,7 @@ public class UserService {
 
     public String checkIfFirstLogin(LoginDTO loginDTO) {
         UserExample example = new UserExample();
-        example.createCriteria().andUsernameEqualTo(loginDTO.getUsername());
+        example.createCriteria().andUsernameEqualTo(Integer.parseInt(loginDTO.getUsername()));
         List<User> users = userMapper.selectByExample(example);
         if (users != null && users.size() > 0) {
             if (users.get(0).getPassword().equals(loginDTO.getPassword())) {

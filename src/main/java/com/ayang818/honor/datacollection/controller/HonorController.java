@@ -1,5 +1,6 @@
 package com.ayang818.honor.datacollection.controller;
 
+import com.ayang818.honor.datacollection.enumdata.UserDataEnum;
 import com.ayang818.honor.datacollection.exception.ICustomizeResponseCode;
 import com.ayang818.honor.datacollection.mapper.TotalHonorMapper;
 import com.ayang818.honor.datacollection.model.TotalHonor;
@@ -32,8 +33,12 @@ public class HonorController {
 
     @RequestMapping(value = "/api/honor/list", method = RequestMethod.GET)
     public List<TotalHonor> listSubmittedHonor(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        List<TotalHonor> totalHonors = totalHonorService.listBySchoolNumber(user.getUsername());
-        return totalHonors;
+        byte type = (byte) request.getSession().getAttribute("type");
+        if (type == UserDataEnum.USERTYPE) {
+            User user = (User) request.getSession().getAttribute("user");
+            List<TotalHonor> totalHonors = totalHonorService.listBySchoolNumber(user.getUsername());
+            return totalHonors;
+        }
+        return null;
     }
 }

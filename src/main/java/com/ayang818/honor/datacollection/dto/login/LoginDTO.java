@@ -10,7 +10,7 @@ import lombok.Data;
  **/
 @Data
 public class LoginDTO {
-    private Integer username;
+    private String username;
     private String password;
-    private String type;
+    private Byte type;
 }

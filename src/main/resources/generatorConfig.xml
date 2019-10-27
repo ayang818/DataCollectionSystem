@@ -56,6 +56,8 @@
 
         <table schema="honorcollege" tableName="statistics_honor" domainObjectName="TotalHonor">
         </table>
+        <table schema="honorcollege" tableName="admin_info" domainObjectName="Admin">
+        </table>
 
     </context>
 </generatorConfiguration>
