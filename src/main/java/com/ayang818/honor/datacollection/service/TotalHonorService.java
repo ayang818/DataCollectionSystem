@@ -22,7 +22,10 @@ public class TotalHonorService {
     public List<TotalHonor> listBySchoolNumber(Integer schoolNumber) {
         TotalHonorExample totalHonorExample = new TotalHonorExample();
         totalHonorExample.createCriteria().andSchoolNumberEqualTo(schoolNumber);
-        List<TotalHonor> totalHonors = totalHonorMapper.selectByExample(totalHonorExample);
-        return totalHonors;
+        return totalHonorMapper.selectByExample(totalHonorExample);
+    }
+
+    public List<TotalHonor> list() {
+        return totalHonorMapper.selectByExample(new TotalHonorExample());
     }
 }

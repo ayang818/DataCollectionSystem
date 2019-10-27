@@ -113,8 +113,15 @@ public class UserController {
 
     @RequestMapping(value = "/api/profile/edit", method = RequestMethod.POST)
     public String updatePassword(@RequestBody EditProfileReceiveDTO receiveDTO, HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        userService.updateUserPassword(user, receiveDTO);
+        byte type = (byte) request.getSession().getAttribute("type");
+        if (type == UserDataEnum.USERTYPE) {
+            User user = (User) request.getSession().getAttribute("user");
+            userService.updateUserPassword(user, receiveDTO);
+        } else if (type == UserDataEnum.ADMINTYPE) {
+            Admin admin = (Admin) request.getSession().getAttribute("user");
+            adminService.updateUserPassword(admin, receiveDTO);
+        }
+
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 }
