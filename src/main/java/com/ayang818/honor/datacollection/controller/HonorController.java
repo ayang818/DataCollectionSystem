@@ -1,13 +1,15 @@
 package com.ayang818.honor.datacollection.controller;
 
 import com.ayang818.honor.datacollection.dto.honor.CompetitionHonorReceiveDTO;
+import com.ayang818.honor.datacollection.dto.honor.PaperHonorReceiveDTO;
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
 import com.ayang818.honor.datacollection.exception.ICustomizeResponseCode;
 import com.ayang818.honor.datacollection.model.Admin;
 import com.ayang818.honor.datacollection.model.TotalHonor;
 import com.ayang818.honor.datacollection.model.User;
-import com.ayang818.honor.datacollection.service.TotalHonorService;
+import com.ayang818.honor.datacollection.service.HonorService;
 import com.ayang818.honor.datacollection.util.GetUserTypeUtil;
+import com.ayang818.honor.datacollection.util.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,7 @@ import java.util.List;
 public class HonorController {
 
     @Autowired
-    private TotalHonorService totalHonorService;
+    private HonorService honorService;
 
     @RequestMapping(value = "/api/honor/competition", method = RequestMethod.POST)
     public ICustomizeResponseCode createOrUpdateCompetitionHonor(HttpServletRequest request) {
@@ -37,19 +39,26 @@ public class HonorController {
     @RequestMapping(value = "/api/honor/list", method = RequestMethod.GET)
     public List<TotalHonor> listSubmittedHonorAsUser(HttpServletRequest request) {
         User user = GetUserTypeUtil.getUser(request);
-        return totalHonorService.listBySchoolNumber(user.getUsername());
+        return honorService.listBySchoolNumber(user.getUsername());
     }
 
     @RequestMapping(value = "/api/honor/admin/list", method = RequestMethod.GET)
     public List<TotalHonor> listSubmittedHonorAsAdmin(HttpServletRequest request) {
         Admin admin = GetUserTypeUtil.getAdmin(request);
-        return totalHonorService.list();
+        return honorService.list();
     }
 
-    @RequestMapping(value = "/api/honor/edit/competition", method = RequestMethod.GET)
-    public CustomizeResponseCode editCompetitionHonor(@RequestBody CompetitionHonorReceiveDTO receiveDTO, HttpServletRequest request) {
+    @RequestMapping(value = "/api/honor/edit/competition", method = RequestMethod.POST)
+    public String editCompetitionHonor(@RequestBody CompetitionHonorReceiveDTO receiveDTO, HttpServletRequest request) {
         User user = GetUserTypeUtil.getUser(request);
+        honorService.insertCompetitionHonor(user, receiveDTO);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
+    }
 
-        return CustomizeResponseCode.SUCCESS;
+    @RequestMapping(value = "/api/honor/edit/paper", method = RequestMethod.POST)
+    public String editPaperHonor(@RequestBody PaperHonorReceiveDTO receiveDTO, HttpServletRequest request) {
+        User user = GetUserTypeUtil.getUser(request);
+        honorService.insertPaperHonor(user, receiveDTO);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 }

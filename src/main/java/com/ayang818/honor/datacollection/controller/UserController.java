@@ -42,7 +42,6 @@ public class UserController {
 
     @RequestMapping(value = "/api/login/user", method = RequestMethod.POST)
     public Object loginAsUser(@RequestBody LoginDTO loginDTO) {
-        System.out.println(loginDTO.getUsername());
         // 检查学生数据库中有没有这个学号
         Student student = registerService.checkIfUserExists(loginDTO);
         if (student == null) {
