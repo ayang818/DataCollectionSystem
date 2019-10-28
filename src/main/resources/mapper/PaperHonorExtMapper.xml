@@ -28,7 +28,7 @@
         insert into paper_honor(student_name,school_number,paper_title,paper_level,publish_year,publication_name,author_name,
                                 author_order,prove,teacher_name,teacher_id,pass,gmt_create,gmt_modified)
         values(#{studentName},#{schoolNumber},#{paperTitle},#{paperLevel},#{publishYear},#{publicationName},#{authorName},
-               #{authorOrder},#{prove},#{teacher_name},#{teacher_id},#{pass},#{gmtCreate},#{gmtModified})
+               #{authorOrder},#{prove},#{teacherName},#{teacherId},#{pass},#{gmtCreate},#{gmtModified})
     </insert>
 
 </mapper>

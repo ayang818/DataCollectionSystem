@@ -9,4 +9,5 @@ package com.ayang818.honor.datacollection.enumdata;
 public interface UserDataEnum {
     byte ADMINTYPE = 2;
     byte USERTYPE = 1;
+
 }

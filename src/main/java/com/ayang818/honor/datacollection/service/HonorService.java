@@ -1,6 +1,9 @@
 package com.ayang818.honor.datacollection.service;
 
 import com.ayang818.honor.datacollection.dto.honor.*;
+import com.ayang818.honor.datacollection.enumdata.HonorTypeEnum;
+import com.ayang818.honor.datacollection.exception.CustomizeException;
+import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
 import com.ayang818.honor.datacollection.mapper.*;
 import com.ayang818.honor.datacollection.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +105,7 @@ public class HonorService {
         paperHonor.setStudentName(user.getStudentName());
         // 上传证明
         paperHonor.setProve(null);
-        paperHonorMapper.insert(paperHonor);
+        paperHonorExtMapper.insertAndGetId(paperHonor);
         TotalHonor totalHonor = new TotalHonor();
         totalHonor.setDetailId(paperHonor.getId());
         totalHonor.setStudentName(user.getStudentName());
@@ -127,7 +130,7 @@ public class HonorService {
         knowledgeHonor.setTeacherName(receiveDTO.getTeacherName());
         // 上传证明
         knowledgeHonor.setProve(null);
-        knowledgeHonorMapper.insert(knowledgeHonor);
+        knowledgeHonorExtMapper.insertAndGetId(knowledgeHonor);
         TotalHonor totalHonor = new TotalHonor();
         totalHonor.setDetailId(knowledgeHonor.getId());
         totalHonor.setStudentName(user.getStudentName());
@@ -150,7 +153,7 @@ public class HonorService {
         abilityHonor.setGmtModified(abilityHonor.getGmtCreate());
         // 上传证明
         abilityHonor.setProve(null);
-        abilityHonorMapper.insert(abilityHonor);
+        abilityHonorExtMapper.insertAndGetId(abilityHonor);
         TotalHonor totalHonor = new TotalHonor();
         totalHonor.setDetailId(abilityHonor.getId());
         totalHonor.setStudentName(user.getStudentName());
@@ -170,5 +173,63 @@ public class HonorService {
         graduation.setGmtCreate(new Date(System.currentTimeMillis()));
         graduation.setGmtModified(graduation.getGmtCreate());
         graduationMapper.insert(graduation);
+    }
+
+    public CompetitionHonor selectByCompetitionHonorId(Long id) {
+        return competitionHonorMapper.selectByPrimaryKey(id);
+    }
+
+    public PaperHonor selectByPaperHonorId(Long id) {
+        return paperHonorMapper.selectByPrimaryKey(id);
+    }
+
+    public KnowledgeHonor selectByKnowlegeHonorId(Long id) {
+        return knowledgeHonorMapper.selectByPrimaryKey(id);
+    }
+
+    public AbilityHonor selectByAbilityHonorId(Long id) {
+        return abilityHonorMapper.selectByPrimaryKey(id);
+    }
+
+    public Boolean updateTotalPassStatus(Long id, int status, Integer type) {
+        TotalHonorExample example = new TotalHonorExample();
+        example.createCriteria().andDetailIdEqualTo(id).andTypeEqualTo(type);
+        List<TotalHonor> totalHonors = totalHonorMapper.selectByExample(example);
+        if (totalHonors.size() >= 1) {
+            TotalHonor record = totalHonors.get(0);
+            record.setPass((byte) status);
+            totalHonorMapper.updateByPrimaryKey(record);
+            return true;
+        }
+        throw new CustomizeException(CustomizeResponseCode.NO_SUCH_RECORD);
+    }
+
+    public void setCompetitionPassStatus(Long id, int status) {
+        CompetitionHonor competitionHonor = competitionHonorMapper.selectByPrimaryKey(id);
+        competitionHonor.setPass((byte) status);
+        competitionHonorMapper.updateByPrimaryKey(competitionHonor);
+        updateTotalPassStatus(id, status, HonorTypeEnum.COMPETITION_TYPE);
+    }
+
+    public void setPaperPassStatus(Long id, int status) {
+        PaperHonor paperHonor = paperHonorMapper.selectByPrimaryKey(id);
+        paperHonor.setPass((byte) status);
+        paperHonorMapper.updateByPrimaryKey(paperHonor);
+        updateTotalPassStatus(id, status, HonorTypeEnum.PAPER_TYPE);
+    }
+
+    public void setKnowledgePassStatus(Long id, int status) {
+        KnowledgeHonor knowledgeHonor = knowledgeHonorMapper.selectByPrimaryKey(id);
+        knowledgeHonor.setPass((byte) status);
+        knowledgeHonorMapper.updateByPrimaryKey(knowledgeHonor);
+        updateTotalPassStatus(id, status, HonorTypeEnum.KNOWLEDGE_TYPE);
+    }
+
+
+    public void setAbilityPassStatus(Long id, int status) {
+        AbilityHonor abilityHonor = abilityHonorMapper.selectByPrimaryKey(id);
+        abilityHonor.setPass((byte) status);
+        abilityHonorMapper.updateByPrimaryKey(abilityHonor);
+        updateTotalPassStatus(id, status, HonorTypeEnum.ABILITY_TYPE);
     }
 }

@@ -16,7 +16,8 @@ public enum CustomizeResponseCode implements ICustomizeResponseCode {
     USER_ISNOT_EXISTS(405, "用户不存在，请联系教师添加信息"),
     PASSWORD_ERROR(422, "密码错误"),
     USERNAME_ONLY_NUMBER(433, "学生用户名为学号"),
-    NOT_ADMIN(422, "你不是管理员!");
+    NOT_ADMIN(422, "你不是管理员!"),
+    NO_SUCH_RECORD(422, "没有这条记录");
 
     private Integer code;
     private String message;
