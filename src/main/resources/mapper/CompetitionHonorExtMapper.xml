@@ -22,9 +22,9 @@
     </resultMap>
 
     <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id">
-        insert into competition_honor(student_name,school_number,competition_level,competition_name,teacher_name,teacher_id,honor_level,
+        insert into competition_honor(id,student_name,school_number,competition_level,competition_name,teacher_name,teacher_id,honor_level,
                                       prove,pass,gmt_create,gmt_modified)
-        values(#{studentName},#{schoolNumber},#{competitionLevel},#{competitionName},#{teacherName},#{teacherId},#{honorLevel},#{prove},#{pass},#{gmtCreate},#{gmtModified})
+        values(#{id},#{studentName},#{schoolNumber},#{competitionLevel},#{competitionName},#{teacherName},#{teacherId},#{honorLevel},#{prove},#{pass},#{gmtCreate},#{gmtModified})
     </insert>
 
 </mapper>

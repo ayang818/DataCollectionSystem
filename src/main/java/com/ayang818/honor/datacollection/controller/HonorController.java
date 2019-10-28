@@ -43,30 +43,30 @@ public class HonorController {
     }
 
     @RequestMapping(value = "/api/honor/edit/competition", method = RequestMethod.POST)
-    public String editCompetitionHonor(@RequestBody CompetitionHonorReceiveDTO receiveDTO, HttpServletRequest request) {
+    public String editCompetitionHonor(@RequestBody CompetitionHonorReceiveDTO receiveDTO, HttpServletRequest request, @RequestParam(value = "id", required = false) Long id) {
         User user = GetUserTypeUtil.getUser(request);
-        honorService.insertCompetitionHonor(user, receiveDTO);
+        honorService.insertOrUpdateCompetitionHonor(user, receiveDTO, id);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
     @RequestMapping(value = "/api/honor/edit/paper", method = RequestMethod.POST)
-    public String editPaperHonor(@RequestBody PaperHonorReceiveDTO receiveDTO, HttpServletRequest request) {
+    public String editPaperHonor(@RequestBody PaperHonorReceiveDTO receiveDTO, HttpServletRequest request, @RequestParam(value = "id", required = false) Long id) {
         User user = GetUserTypeUtil.getUser(request);
-        honorService.insertPaperHonor(user, receiveDTO);
+        honorService.insertOrUpdatePaperHonor(user, receiveDTO, id);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
     @RequestMapping(value = "/api/honor/edit/knowledge", method = RequestMethod.POST)
-    public String editKnowledgeHonor(@RequestBody KnowledgeHonorReceiveDTO receiveDTO, HttpServletRequest request) {
+    public String editKnowledgeHonor(@RequestBody KnowledgeHonorReceiveDTO receiveDTO, HttpServletRequest request, @RequestParam(value = "id", required = false) Long id) {
         User user = GetUserTypeUtil.getUser(request);
-        honorService.insertKnowledgeHonor(user, receiveDTO);
+        honorService.insertOrUpdateKnowledgeHonor(user, receiveDTO, id);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
     @RequestMapping(value = "/api/honor/edit/ability", method = RequestMethod.POST)
-    public String editKnowledgeHonor(@RequestBody AbilityHonorReceiveDTO receiveDTO, HttpServletRequest request) {
+    public String editKnowledgeHonor(@RequestBody AbilityHonorReceiveDTO receiveDTO, HttpServletRequest request, @RequestParam(value = "id", required = false) Long id) {
         User user = GetUserTypeUtil.getUser(request);
-        honorService.insertAbilityHonor(user, receiveDTO);
+        honorService.insertOrUpdateAbilityHonor(user, receiveDTO, id);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 

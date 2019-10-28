@@ -20,7 +20,7 @@
     </resultMap>
 
     <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id">
-        insert into ability_honor(student_name,school_number,pass,teacher_id,teacher_name,ability_type,gmt_create,gmt_modified,prove)
-        values(#{studentName},#{schoolNumber},#{pass},#{teacherId},#{teacherName},#{abilityType},#{gmtCreate},#{gmtModified},#{prove})
+        insert into ability_honor(id,student_name,school_number,pass,teacher_id,teacher_name,ability_type,gmt_create,gmt_modified,prove)
+        values(#{id},#{studentName},#{schoolNumber},#{pass},#{teacherId},#{teacherName},#{abilityType},#{gmtCreate},#{gmtModified},#{prove})
     </insert>
 </mapper>

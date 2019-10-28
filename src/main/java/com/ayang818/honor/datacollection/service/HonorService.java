@@ -63,8 +63,39 @@ public class HonorService {
         return totalHonorMapper.selectByExample(new TotalHonorExample());
     }
 
-    public void insertCompetitionHonor(User user, CompetitionHonorReceiveDTO receiveDTO) {
-        CompetitionHonor competitionHonor = new CompetitionHonor();
+    // 这里有NPE的可能性，但是没想好怎么改
+    public void updateTotalTable(String honorName, Integer type,Long id) {
+        TotalHonorExample example = new TotalHonorExample();
+        example.createCriteria().andTypeEqualTo(type).andDetailIdEqualTo(id);
+        List<TotalHonor> totalHonors = totalHonorMapper.selectByExample(example);
+        TotalHonor totalHonor= totalHonors.size() == 1 ? totalHonors.get(0) : null;
+        totalHonor.setHonorName(honorName);
+        totalHonor.setPass((byte) 1);
+        totalHonorMapper.updateByPrimaryKey(totalHonor);
+    }
+
+
+    public void insertOrUpdateCompetitionHonor(User user, CompetitionHonorReceiveDTO receiveDTO, Long id) {
+        CompetitionHonor competitionHonor;
+        if (id != null) {
+            competitionHonor = competitionHonorMapper.selectByPrimaryKey(id);
+            competitionHonor.setCompetitionLevel(receiveDTO.getCompetitionLevel());
+            competitionHonor.setCompetitionName(receiveDTO.getCompetitionName());
+            competitionHonor.setHonorLevel(receiveDTO.getHonorLevel());
+            competitionHonor.setProve(null);
+            competitionHonor.setTeacherName(receiveDTO.getTeacherName());
+            // 待完成
+            competitionHonor.setTeacherId(null);
+            competitionHonor.setSchoolNumber(user.getUsername());
+            competitionHonor.setStudentName(user.getStudentName());
+            competitionHonor.setGmtModified(new Date(System.currentTimeMillis()));
+            competitionHonor.setPass((byte) 1);
+            competitionHonorMapper.updateByPrimaryKey(competitionHonor);
+            updateTotalTable(receiveDTO.getCompetitionName() + " " + receiveDTO.getHonorLevel(), HonorTypeEnum.COMPETITION_TYPE,competitionHonor.getId());
+            return;
+        } else {
+            competitionHonor = new CompetitionHonor();
+        }
         competitionHonor.setCompetitionLevel(receiveDTO.getCompetitionLevel());
         competitionHonor.setCompetitionName(receiveDTO.getCompetitionName());
         competitionHonor.setHonorLevel(receiveDTO.getHonorLevel());
@@ -88,8 +119,27 @@ public class HonorService {
         totalHonorMapper.insert(totalHonor);
     }
 
-    public void insertPaperHonor(User user, PaperHonorReceiveDTO receiveDTO) {
-        PaperHonor paperHonor = new PaperHonor();
+    public void insertOrUpdatePaperHonor(User user, PaperHonorReceiveDTO receiveDTO, Long id) {
+        PaperHonor paperHonor;
+        if (id != null) {
+            paperHonor = paperHonorMapper.selectByPrimaryKey(id);
+            paperHonor.setAuthorName(receiveDTO.getAuthorName());
+            paperHonor.setAuthorOrder(receiveDTO.getAuthorOrder());
+            paperHonor.setGmtModified(new Date(System.currentTimeMillis()));
+            paperHonor.setPaperLevel(receiveDTO.getPaperLevel());
+            paperHonor.setPaperTitle(receiveDTO.getPaperTitle());
+            String[] yearString = receiveDTO.getPublishYear().toString().split(" ");
+            paperHonor.setPublishYear(Integer.valueOf(yearString[yearString.length - 1]));
+            paperHonor.setPublicationName(receiveDTO.getPublicationName());
+            paperHonor.setTeacherName(receiveDTO.getTeacherName());
+            // 上传证明
+            paperHonor.setProve(null);
+            paperHonor.setPass((byte) 1);
+            paperHonorMapper.updateByPrimaryKey(paperHonor);
+            updateTotalTable(receiveDTO.getPaperTitle(), HonorTypeEnum.PAPER_TYPE, paperHonor.getId());
+        } else {
+            paperHonor = new PaperHonor();
+        }
         paperHonor.setAuthorName(receiveDTO.getAuthorName());
         paperHonor.setAuthorOrder(receiveDTO.getAuthorOrder());
         paperHonor.setGmtCreate(new Date(System.currentTimeMillis()));
@@ -98,7 +148,7 @@ public class HonorService {
         paperHonor.setPaperTitle(receiveDTO.getPaperTitle());
         paperHonor.setPass((byte) 1);
         String[] yearString = receiveDTO.getPublishYear().toString().split(" ");
-        paperHonor.setPublishYear(Integer.valueOf(yearString[yearString.length-1]));
+        paperHonor.setPublishYear(Integer.valueOf(yearString[yearString.length - 1]));
         paperHonor.setPublicationName(receiveDTO.getPublicationName());
         paperHonor.setTeacherName(receiveDTO.getTeacherName());
         paperHonor.setSchoolNumber(user.getUsername());
@@ -116,8 +166,24 @@ public class HonorService {
         totalHonorMapper.insert(totalHonor);
     }
 
-    public void insertKnowledgeHonor(User user, KnowledgeHonorReceiveDTO receiveDTO) {
-        KnowledgeHonor knowledgeHonor = new KnowledgeHonor();
+    public void insertOrUpdateKnowledgeHonor(User user, KnowledgeHonorReceiveDTO receiveDTO, Long id) {
+        KnowledgeHonor knowledgeHonor;
+        if (id != null) {
+            knowledgeHonor = knowledgeHonorMapper.selectByPrimaryKey(id);
+            knowledgeHonor.setHonorName(receiveDTO.getHonorName());
+            knowledgeHonor.setHonorType(receiveDTO.getHonorType());
+            knowledgeHonor.setAuthorizationStatus(receiveDTO.getAuthorizationStatus());
+            knowledgeHonor.setRegisterNumber(receiveDTO.getRegisterNumber());
+            knowledgeHonor.setGmtModified(new Date(System.currentTimeMillis()));
+            knowledgeHonor.setTeacherName(receiveDTO.getTeacherName());
+            // 上传证明
+            knowledgeHonor.setProve(null);
+            knowledgeHonor.setPass((byte) 1);
+            knowledgeHonorMapper.updateByPrimaryKey(knowledgeHonor);
+            updateTotalTable(receiveDTO.getHonorName(), HonorTypeEnum.KNOWLEDGE_TYPE, knowledgeHonor.getId());
+        } else {
+            knowledgeHonor = new KnowledgeHonor();
+        }
         knowledgeHonor.setPass((byte) 1);
         knowledgeHonor.setHonorName(receiveDTO.getHonorName());
         knowledgeHonor.setHonorType(receiveDTO.getHonorType());
@@ -142,8 +208,20 @@ public class HonorService {
     }
 
 
-    public void insertAbilityHonor(User user, AbilityHonorReceiveDTO receiveDTO) {
-        AbilityHonor abilityHonor = new AbilityHonor();
+    public void insertOrUpdateAbilityHonor(User user, AbilityHonorReceiveDTO receiveDTO, Long id) {
+        AbilityHonor abilityHonor;
+        if (id != null) {
+            abilityHonor = abilityHonorMapper.selectByPrimaryKey(id);
+            abilityHonor.setAbilityType(receiveDTO.getAbilityType());
+            abilityHonor.setTeacherName(receiveDTO.getTeacherName());
+            abilityHonor.setGmtModified(new Date(System.currentTimeMillis()));
+            // 上传证明
+            abilityHonor.setProve(null);
+            abilityHonor.setPass((byte) 1);
+            updateTotalTable(receiveDTO.getAbilityType(), HonorTypeEnum.ABILITY_TYPE, abilityHonor.getId());
+        } else {
+            abilityHonor = new AbilityHonor();
+        }
         abilityHonor.setPass((byte) 1);
         abilityHonor.setAbilityType(receiveDTO.getAbilityType());
         abilityHonor.setTeacherName(receiveDTO.getTeacherName());
@@ -224,7 +302,6 @@ public class HonorService {
         knowledgeHonorMapper.updateByPrimaryKey(knowledgeHonor);
         updateTotalPassStatus(id, status, HonorTypeEnum.KNOWLEDGE_TYPE);
     }
-
 
     public void setAbilityPassStatus(Long id, int status) {
         AbilityHonor abilityHonor = abilityHonorMapper.selectByPrimaryKey(id);
