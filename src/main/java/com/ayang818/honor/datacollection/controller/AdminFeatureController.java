@@ -5,6 +5,7 @@ import com.ayang818.honor.datacollection.model.AbilityHonor;
 import com.ayang818.honor.datacollection.model.CompetitionHonor;
 import com.ayang818.honor.datacollection.model.KnowledgeHonor;
 import com.ayang818.honor.datacollection.model.PaperHonor;
+import com.ayang818.honor.datacollection.service.CategoryService;
 import com.ayang818.honor.datacollection.service.HonorService;
 import com.ayang818.honor.datacollection.util.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminFeatureController {
     @Autowired
     private HonorService honorService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @RequestMapping(value = "/api/honor/detail/competition/{id}", method = RequestMethod.GET)
     public CompetitionHonor getCompetitionHonorDetail(HttpServletRequest request, @PathVariable Long id) {
@@ -66,4 +70,29 @@ public class AdminFeatureController {
         honorService.setAbilityPassStatus(id, status);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
+
+    @RequestMapping(value = "/api/admin/categories/insert", method = RequestMethod.POST)
+    public String insertNode(HttpServletRequest request, @RequestParam(value = "parent", required = false) Long parentId, @RequestParam(value = "value", required = false) String value) {
+        categoryService.insertNode(parentId, value);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
+    }
+
+    @RequestMapping(value = "/api/admin/categories/delete", method = RequestMethod.POST)
+    public String deleteNode(HttpServletRequest request,  @RequestParam(value = "parent", required = false) Long parentId, @RequestParam(value = "value", required = false) String value) {
+        categoryService.deleteNode(parentId, value);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
+    }
+
+    @RequestMapping(value = "/api/admin/categories/update", method = RequestMethod.POST)
+    public String updateNode(HttpServletRequest request, @RequestParam(value = "parent", required = false) Long parentId, @RequestParam(value = "value", required = false) String value) {
+        categoryService.updateNode(parentId, value);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
+    }
+
+    @RequestMapping(value = "/api/admin/categories/query", method = RequestMethod.POST)
+    public String queryNode(HttpServletRequest request, @RequestParam(value = "parent", required = false) Long parentId, @RequestParam(value = "value", required = false) String value) {
+        categoryService.queryNode(parentId, value);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
+    }
+
 }
