@@ -20,7 +20,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @RequestMapping(value = "/api/categories/competition", method = RequestMethod.GET)
-    public ConcurrentHashMap<String, List> getCompetitionItem(HttpServletRequest request) {
+    public ConcurrentHashMap<String, Object> getCompetitionItem(HttpServletRequest request) {
         GetUserTypeUtil.getUser(request);
         return categoryService.getCompetitionItem();
     }

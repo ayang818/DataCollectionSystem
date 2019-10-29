@@ -10,4 +10,6 @@ public interface ClosureTableExtMapper {
 
     @Select("select descendant from closure_table where ancestor=#{parentId} and distance=1")
     List<ClosureTable> queryDescendant(@Param("parentId") Long parentId);
+
+
 }
