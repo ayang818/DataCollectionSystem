@@ -1,40 +1,41 @@
-package com.ayang818.honor.datacollection.util;
+package com.ayang818.honor.datacollection.util.excelListener;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
+import com.ayang818.honor.datacollection.dto.excel.CompetitionDataExcelDTO;
+import com.ayang818.honor.datacollection.dto.excel.StudentExcelDTO;
 import com.ayang818.honor.datacollection.dto.excel.TeacherExcelDTO;
-import com.ayang818.honor.datacollection.service.TeacherService;
+import com.ayang818.honor.datacollection.service.HonorService;
+import org.apache.tomcat.util.security.PrivilegedGetTccl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @ClassName ExcelDataListener
+ * @ClassName CompetitionExcelDataListener
  * @Dessription TODO
  * @Author 杨丰畅
- * @Date 2019/10/24 14:08
+ * @Date 2019/10/29 21:23
  **/
 @Component
-public class TeacherExcelDataListener extends AnalysisEventListener<TeacherExcelDTO> {
+public class CompetitionExcelDataListener extends AnalysisEventListener<CompetitionDataExcelDTO> {
 
-    @Autowired
-    private TeacherService teacherService;
+    private HonorService honorService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TeacherExcelDataListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CompetitionExcelDataListener.class);
     /**
      * 每隔300条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收
      */
     private static final int BATCH_COUNT = 300;
 
-    List<TeacherExcelDTO> list = new ArrayList<>();
+    List<CompetitionDataExcelDTO> list = new ArrayList<>();
 
     @Override
-    public void invoke(TeacherExcelDTO data, AnalysisContext context) {
+    public void invoke(CompetitionDataExcelDTO data, AnalysisContext context) {
         LOGGER.info("解析到一条数据:{}", JSON.toJSONString(data));
         list.add(data);
         if (list.size() >= BATCH_COUNT) {
@@ -54,7 +55,7 @@ public class TeacherExcelDataListener extends AnalysisEventListener<TeacherExcel
      */
     private void saveData() {
         LOGGER.info("{}条数据，开始存储数据库！", list.size());
-        teacherService.insertAll(list);
+//        honorService.insertAll(list);
         LOGGER.info("存储数据库成功！");
     }
 }
