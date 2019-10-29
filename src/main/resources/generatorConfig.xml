@@ -56,7 +56,11 @@
 
         <table schema="honorcollege" tableName="statistics_honor" domainObjectName="TotalHonor">
         </table>
-        <table schema="honorcollege" tableName="admin_info" domainObjectName="Admin">
+
+        <table schema="honorcollege" tableName="categories_dict" domainObjectName="Category">
+        </table>
+
+        <table schema="honorcollege" tableName="closure_table" domainObjectName="ClosureTable">
         </table>
 
     </context>
