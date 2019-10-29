@@ -87,7 +87,7 @@ public class AdminFeatureController {
     @RequestMapping(value = "/api/admin/categories/update", method = RequestMethod.GET)
     public String updateNode(HttpServletRequest request, @RequestParam(value = "parent", required = false) Long parentId, @RequestParam(value = "value", required = false) String value) {
         GetUserTypeUtil.getAdmin(request);
-        categoryService.updateNode(parentId, value);
+        categoryService.updateNodeValue(parentId, value);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
@@ -95,5 +95,11 @@ public class AdminFeatureController {
     public List<Category> queryNode(HttpServletRequest request, @RequestParam(value = "parent", required = false) Long parentId) {
         GetUserTypeUtil.getAdmin(request);
         return categoryService.queryNode(parentId);
+    }
+
+    @RequestMapping(value = "/api/admin/categories/parentname", method = RequestMethod.GET)
+    public String getParentName(HttpServletRequest request, @RequestParam("parent" ) Long id) {
+        GetUserTypeUtil.getAdmin(request);
+        return  categoryService.queryParentName(id);
     }
 }

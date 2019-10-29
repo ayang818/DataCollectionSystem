@@ -65,13 +65,14 @@ public class CategoryService {
         }
     }
 
-    public void deleteNode(Long parentId) {
+    public void deleteNode(Long id) {
         ClosureTableExample example = new ClosureTableExample();
-        example.createCriteria().andDescendantEqualTo(parentId);
+        example.createCriteria().andDescendantEqualTo(id);
         closureTableMapper.deleteByExample(example);
+        categoryMapper.deleteByPrimaryKey(id);
     }
 
-    public void updateNode(Long parentId, String value) {
+    public void updateNodeValue(Long parentId, String value) {
 
     }
 
@@ -83,5 +84,13 @@ public class CategoryService {
             categoryList.add(category);
         }
         return  categoryList;
+    }
+
+    public String queryParentName(Long id) {
+        Category category = categoryMapper.selectByPrimaryKey(id);
+        if (category != null) {
+            return category.getTitle();
+        }
+        return null;
     }
 }
