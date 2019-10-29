@@ -71,27 +71,27 @@ public class AdminFeatureController {
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
-    @RequestMapping(value = "/api/admin/categories/insert", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/admin/categories/insert", method = RequestMethod.GET)
     public String insertNode(HttpServletRequest request, @RequestParam(value = "parent", required = false) Long parentId, @RequestParam(value = "value", required = false) String value) {
         categoryService.insertNode(parentId, value);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
-    @RequestMapping(value = "/api/admin/categories/delete", method = RequestMethod.POST)
-    public String deleteNode(HttpServletRequest request,  @RequestParam(value = "parent", required = false) Long parentId, @RequestParam(value = "value", required = false) String value) {
-        categoryService.deleteNode(parentId, value);
+    @RequestMapping(value = "/api/admin/categories/delete", method = RequestMethod.GET)
+    public String deleteNode(HttpServletRequest request,  @RequestParam(value = "id", required = false) Long id) {
+        categoryService.deleteNode(id);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
-    @RequestMapping(value = "/api/admin/categories/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/admin/categories/update", method = RequestMethod.GET)
     public String updateNode(HttpServletRequest request, @RequestParam(value = "parent", required = false) Long parentId, @RequestParam(value = "value", required = false) String value) {
         categoryService.updateNode(parentId, value);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
-    @RequestMapping(value = "/api/admin/categories/query", method = RequestMethod.POST)
-    public String queryNode(HttpServletRequest request, @RequestParam(value = "parent", required = false) Long parentId, @RequestParam(value = "value", required = false) String value) {
-        categoryService.queryNode(parentId, value);
+    @RequestMapping(value = "/api/admin/categories/query", method = RequestMethod.GET)
+    public String queryNode(HttpServletRequest request, @RequestParam(value = "parent", required = false) Long parentId) {
+        categoryService.queryNode(parentId);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
