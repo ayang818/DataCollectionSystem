@@ -8,6 +8,7 @@ import com.ayang818.honor.datacollection.model.Category;
 import com.ayang818.honor.datacollection.model.CategoryExample;
 import com.ayang818.honor.datacollection.model.ClosureTable;
 import com.ayang818.honor.datacollection.model.ClosureTableExample;
+import io.swagger.annotations.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +50,7 @@ public class CategoryService {
         List<ClosureTable> parentsTrace = closureTableMapper.selectByExample(example);
         List<ClosureTable> descendantTrace = new ArrayList<>(16);
         for (int i = 0; i < parentsTrace.size(); i++) {
-            ClosureTable closureTable = parentsTrace.get(0);
+            ClosureTable closureTable = parentsTrace.get(i);
             closureTable.setDescendant(selfId);
             closureTable.setDistance(closureTable.getDistance() + 1);
             descendantTrace.add(closureTable);
@@ -65,14 +66,22 @@ public class CategoryService {
     }
 
     public void deleteNode(Long parentId) {
-
+        ClosureTableExample example = new ClosureTableExample();
+        example.createCriteria().andDescendantEqualTo(parentId);
+        closureTableMapper.deleteByExample(example);
     }
 
     public void updateNode(Long parentId, String value) {
 
     }
 
-    public void queryNode(Long parentId) {
-
+    public List<Category> queryNode(Long parentId) {
+        List<ClosureTable> closureTables = closureTableExtMapper.queryDescendant(parentId);
+        List<Category> categoryList = new ArrayList<>();
+        for (ClosureTable closureTable : closureTables) {
+            Category category = categoryMapper.selectByPrimaryKey(closureTable.getDescendant());
+            categoryList.add(category);
+        }
+        return  categoryList;
     }
 }
