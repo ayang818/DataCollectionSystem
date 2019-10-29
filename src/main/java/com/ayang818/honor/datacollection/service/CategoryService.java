@@ -1,5 +1,6 @@
 package com.ayang818.honor.datacollection.service;
 
+import com.ayang818.honor.datacollection.enumdata.HonorTypeEnum;
 import com.ayang818.honor.datacollection.mapper.CategoryExtMapper;
 import com.ayang818.honor.datacollection.mapper.CategoryMapper;
 import com.ayang818.honor.datacollection.mapper.ClosureTableExtMapper;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class CategoryService {
@@ -46,7 +48,7 @@ public class CategoryService {
         categoryExtMapper.insertAndGetId(category);
         Long selfId = category.getId();
         ClosureTableExample example = new ClosureTableExample();
-        example.createCriteria().andAncestorEqualTo(parentId);
+        example.createCriteria().andDescendantEqualTo(parentId);
         List<ClosureTable> parentsTrace = closureTableMapper.selectByExample(example);
         List<ClosureTable> descendantTrace = new ArrayList<>(16);
         for (int i = 0; i < parentsTrace.size(); i++) {
@@ -90,6 +92,18 @@ public class CategoryService {
         Category category = categoryMapper.selectByPrimaryKey(id);
         if (category != null) {
             return category.getTitle();
+        }
+        return null;
+    }
+
+    public ConcurrentHashMap<String, List> getCompetitionItem() {
+        CategoryExample example = new CategoryExample();
+        example.createCriteria().andTitleEqualTo(HonorTypeEnum.COMPETITION);
+        List<Category> categories = categoryMapper.selectByExample(example);
+        if (categories.size() == 1) {
+            Category category = categories.get(0);
+            Long parentId = category.getId();
+
         }
         return null;
     }
