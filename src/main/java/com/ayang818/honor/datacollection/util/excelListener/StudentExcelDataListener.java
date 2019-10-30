@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName StudentExcelDataListener
@@ -41,6 +42,11 @@ public class StudentExcelDataListener extends AnalysisEventListener<StudentExcel
             saveData();
             list.clear();
         }
+    }
+
+    @Override
+    public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
+        LOGGER.info("解析到一条头数据:{}", JSON.toJSONString(headMap));
     }
 
     @Override

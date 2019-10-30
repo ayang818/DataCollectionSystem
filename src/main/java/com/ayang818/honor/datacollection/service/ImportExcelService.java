@@ -2,6 +2,7 @@ package com.ayang818.honor.datacollection.service;
 
 import com.alibaba.excel.EasyExcel;
 import com.ayang818.honor.datacollection.controller.ExcelController;
+import com.ayang818.honor.datacollection.dto.excel.CompetitionExcelDTO;
 import com.ayang818.honor.datacollection.dto.excel.StudentExcelDTO;
 import com.ayang818.honor.datacollection.dto.excel.TeacherExcelDTO;
 import com.ayang818.honor.datacollection.util.excelListener.CompetitionExcelDataListener;
@@ -48,6 +49,6 @@ public class ImportExcelService {
 
     public void readCompetitionExcelFile(MultipartFile excelFile) throws IOException {
         InputStream input = excelFile.getInputStream();
-        EasyExcel.read(input, TeacherExcelDTO.class, competitionExcelDataListener).sheet().doRead();
+        EasyExcel.read(input, CompetitionExcelDTO.class, competitionExcelDataListener).sheet().doRead();
     }
 }

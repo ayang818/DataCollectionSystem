@@ -11,9 +11,9 @@ import lombok.Data;
  **/
 @Data
 public class TeacherExcelDTO {
-    @ExcelProperty(value = "导师姓名", index = 0)
+    @ExcelProperty(value = "导师姓名")
     private String name;
 
-    @ExcelProperty(value = "学生数量", index = 1)
+    @ExcelProperty(value = "学生数量")
     private Integer studentNum;
 }

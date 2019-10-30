@@ -4,14 +4,17 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 
 /**
- * @ClassName CompetitionDataExcelDTO
+ * @ClassName CompetitionExcelDTO
  * @Dessription TODO
  * @Author 杨丰畅
  * @Date 2019/10/29 21:05
  **/
 @Data
-public class CompetitionDataExcelDTO {
-    @ExcelProperty("竞赛类别")
+public class CompetitionExcelDTO {
+    @ExcelProperty(value = "序号")
+    private String number;
+
+    @ExcelProperty(value = "竞赛类别")
     private String competitionType;
 
     @ExcelProperty("竞赛级别")
@@ -19,6 +22,9 @@ public class CompetitionDataExcelDTO {
 
     @ExcelProperty("竞赛年份")
     private String competitionYear;
+
+    @ExcelProperty("竞赛全称")
+    private String competitionTotalName;
 
     @ExcelProperty("组号")
     private String teamNumber;
@@ -43,5 +49,8 @@ public class CompetitionDataExcelDTO {
 
     @ExcelProperty("获奖等级")
     private String honorLevel;
+
+    @ExcelProperty("备注")
+    private String message;
 
 }

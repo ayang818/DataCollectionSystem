@@ -3,11 +3,8 @@ package com.ayang818.honor.datacollection.util.excelListener;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
-import com.ayang818.honor.datacollection.dto.excel.CompetitionDataExcelDTO;
-import com.ayang818.honor.datacollection.dto.excel.StudentExcelDTO;
-import com.ayang818.honor.datacollection.dto.excel.TeacherExcelDTO;
+import com.ayang818.honor.datacollection.dto.excel.CompetitionExcelDTO;
 import com.ayang818.honor.datacollection.service.HonorService;
-import org.apache.tomcat.util.security.PrivilegedGetTccl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,7 +19,7 @@ import java.util.List;
  * @Date 2019/10/29 21:23
  **/
 @Component
-public class CompetitionExcelDataListener extends AnalysisEventListener<CompetitionDataExcelDTO> {
+public class CompetitionExcelDataListener extends AnalysisEventListener<CompetitionExcelDTO> {
 
     private HonorService honorService;
 
@@ -32,10 +29,10 @@ public class CompetitionExcelDataListener extends AnalysisEventListener<Competit
      */
     private static final int BATCH_COUNT = 300;
 
-    List<CompetitionDataExcelDTO> list = new ArrayList<>();
+    List<CompetitionExcelDTO> list = new ArrayList<>();
 
     @Override
-    public void invoke(CompetitionDataExcelDTO data, AnalysisContext context) {
+    public void invoke(CompetitionExcelDTO data, AnalysisContext context) {
         LOGGER.info("解析到一条数据:{}", JSON.toJSONString(data));
         list.add(data);
         if (list.size() >= BATCH_COUNT) {
