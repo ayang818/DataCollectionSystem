@@ -1,14 +1,18 @@
 package com.ayang818.honor.datacollection.service;
 
+import com.ayang818.honor.datacollection.dto.excel.CompetitionExcelDTO;
 import com.ayang818.honor.datacollection.dto.honor.*;
 import com.ayang818.honor.datacollection.enumdata.honor.HonorTypeEnum;
 import com.ayang818.honor.datacollection.exception.CustomizeException;
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
 import com.ayang818.honor.datacollection.mapper.*;
 import com.ayang818.honor.datacollection.model.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.util.resources.cldr.ext.TimeZoneNames_en_MO;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -308,5 +312,19 @@ public class HonorService {
         abilityHonor.setPass((byte) status);
         abilityHonorMapper.updateByPrimaryKey(abilityHonor);
         updateTotalPassStatus(id, status, HonorTypeEnum.ABILITY_TYPE);
+    }
+
+    public void insertCompetitionHonorFromExcel(List<CompetitionExcelDTO> list) {
+        List<CompetitionHonor> tempList = new ArrayList<>(300);
+        Date gmtCreate = new Date(System.currentTimeMillis());
+        for (CompetitionExcelDTO competitionExcelDTO : list) {
+            CompetitionHonor competitionHonor = new CompetitionHonor();
+            BeanUtils.copyProperties(competitionHonor, competitionExcelDTO);
+            competitionHonor.setPass((byte) 2);
+            competitionHonor.setGmtCreate(gmtCreate);
+            competitionHonor.setGmtModified(gmtCreate);
+            tempList.add(competitionHonor);
+        }
+        competitionExtHonorMapper.insertList(tempList);
     }
 }
