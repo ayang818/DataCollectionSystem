@@ -1,7 +1,7 @@
 package com.ayang818.honor.datacollection.service;
 
 import com.ayang818.honor.datacollection.dto.honor.*;
-import com.ayang818.honor.datacollection.enumdata.HonorTypeEnum;
+import com.ayang818.honor.datacollection.enumdata.honor.HonorTypeEnum;
 import com.ayang818.honor.datacollection.exception.CustomizeException;
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
 import com.ayang818.honor.datacollection.mapper.*;
@@ -80,13 +80,13 @@ public class HonorService {
         if (id != null) {
             competitionHonor = competitionHonorMapper.selectByPrimaryKey(id);
             competitionHonor.setCompetitionLevel(receiveDTO.getCompetitionLevel());
-            competitionHonor.setCompetitionName(receiveDTO.getCompetitionName());
+            competitionHonor.setCompetitionTotalName(receiveDTO.getCompetitionName());
             competitionHonor.setHonorLevel(receiveDTO.getHonorLevel());
-            competitionHonor.setProve(null);
-            competitionHonor.setTeacherName(receiveDTO.getTeacherName());
+            // competitionHonor.setProve(null);
+            competitionHonor.setGuidanceTeacher(receiveDTO.getTeacherName());
             // 待完成
-            competitionHonor.setTeacherId(null);
-            competitionHonor.setSchoolNumber(user.getUsername());
+            // competitionHonor.setTeacherId(null);
+            competitionHonor.setSchoolNumber(String.valueOf(user.getUsername()));
             competitionHonor.setStudentName(user.getStudentName());
             competitionHonor.setGmtModified(new Date(System.currentTimeMillis()));
             competitionHonor.setPass((byte) 1);
@@ -97,13 +97,13 @@ public class HonorService {
             competitionHonor = new CompetitionHonor();
         }
         competitionHonor.setCompetitionLevel(receiveDTO.getCompetitionLevel());
-        competitionHonor.setCompetitionName(receiveDTO.getCompetitionName());
+        competitionHonor.setCompetitionTotalName(receiveDTO.getCompetitionName());
         competitionHonor.setHonorLevel(receiveDTO.getHonorLevel());
-        competitionHonor.setProve(null);
-        competitionHonor.setTeacherName(receiveDTO.getTeacherName());
+        // competitionHonor.setProve(null);
+        competitionHonor.setGuidanceTeacher(receiveDTO.getTeacherName());
         // 待完成
-        competitionHonor.setTeacherId(null);
-        competitionHonor.setSchoolNumber(user.getUsername());
+        // competitionHonor.setTeacherId(null);
+        competitionHonor.setSchoolNumber(String.valueOf(user.getUsername()));
         competitionHonor.setStudentName(user.getStudentName());
         competitionHonor.setGmtCreate(new Date(System.currentTimeMillis()));
         competitionHonor.setGmtModified(competitionHonor.getGmtCreate());

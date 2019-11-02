@@ -1,6 +1,6 @@
 package com.ayang818.honor.datacollection.service;
 
-import com.ayang818.honor.datacollection.enumdata.HonorTypeEnum;
+import com.ayang818.honor.datacollection.enumdata.honor.HonorTypeEnum;
 import com.ayang818.honor.datacollection.mapper.CategoryExtMapper;
 import com.ayang818.honor.datacollection.mapper.CategoryMapper;
 import com.ayang818.honor.datacollection.mapper.ClosureTableExtMapper;
@@ -9,7 +9,6 @@ import com.ayang818.honor.datacollection.model.Category;
 import com.ayang818.honor.datacollection.model.CategoryExample;
 import com.ayang818.honor.datacollection.model.ClosureTable;
 import com.ayang818.honor.datacollection.model.ClosureTableExample;
-import io.swagger.annotations.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

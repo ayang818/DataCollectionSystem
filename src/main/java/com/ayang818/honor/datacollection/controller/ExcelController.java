@@ -1,7 +1,6 @@
 package com.ayang818.honor.datacollection.controller;
 
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
-import com.ayang818.honor.datacollection.model.CompetitionHonor;
 import com.ayang818.honor.datacollection.service.ImportExcelService;
 import com.ayang818.honor.datacollection.util.JSONUtil;
 import org.slf4j.Logger;
@@ -42,12 +41,6 @@ public class ExcelController {
     @RequestMapping(value = "/api/excel/competition", method = RequestMethod.POST)
     public String importCompetitionExcel(@RequestParam("file") MultipartFile excelFile) throws IOException {
         importExcelService.readCompetitionExcelFile(excelFile);
-        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
-    }
-
-    @RequestMapping(value = "/api/v2/excel/competition", method = RequestMethod.POST)
-    public String importCompetitionExcelV2(@RequestBody List<CompetitionHonor> competitionHonorList) throws IOException {
-
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 }

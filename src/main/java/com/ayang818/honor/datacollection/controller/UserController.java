@@ -40,7 +40,7 @@ public class UserController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping(value = "/api/login/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/user/login", method = RequestMethod.POST)
     public Object loginAsUser(@RequestBody LoginDTO loginDTO) {
         // 检查学生数据库中有没有这个学号
         Student student = registerService.checkIfUserExists(loginDTO);
@@ -74,7 +74,7 @@ public class UserController {
         return loginSuccessDTO;
     }
 
-    @RequestMapping(value = "/api/login/admin", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/admin/login", method = RequestMethod.POST)
     public Object loginAsAdmin(@RequestBody LoginDTO loginDTO) {
         // 管理员权限登陆
         String token = adminService.checkIfExists(loginDTO);

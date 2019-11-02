@@ -1,4 +1,4 @@
-package com.ayang818.honor.datacollection.enumdata;
+package com.ayang818.honor.datacollection.enumdata.honor;
 
 public interface HonorTypeEnum {
     int COMPETITION_TYPE = 1;
