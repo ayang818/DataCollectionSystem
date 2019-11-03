@@ -51,7 +51,7 @@ public class UserController {
         String token = userService.checkIfFirstLogin(loginDTO);
         if (token != null) {
             LoginSuccessDTO loginSuccessDTO = new LoginSuccessDTO();
-            loginSuccessDTO.setCode(200);
+            loginSuccessDTO.setCode(CustomizeResponseCode.SUCCESS.getCode());
             loginSuccessDTO.setMessage(CustomizeResponseCode.SUCCESS.getMessage());
             loginSuccessDTO.setToken(token);
             return loginSuccessDTO;
@@ -68,7 +68,7 @@ public class UserController {
         user.setToken(token1);
         userService.insert(user);
         LoginSuccessDTO loginSuccessDTO = new LoginSuccessDTO();
-        loginSuccessDTO.setCode(200);
+        loginSuccessDTO.setCode(CustomizeResponseCode.SUCCESS.getCode());
         loginSuccessDTO.setMessage(CustomizeResponseCode.SUCCESS.getMessage());
         loginSuccessDTO.setToken(token1);
         return loginSuccessDTO;
@@ -79,7 +79,7 @@ public class UserController {
         // 管理员权限登陆
         String token = adminService.checkIfExists(loginDTO);
         LoginSuccessDTO loginSuccessDTO = new LoginSuccessDTO();
-        loginSuccessDTO.setCode(200);
+        loginSuccessDTO.setCode(CustomizeResponseCode.SUCCESS.getCode());
         loginSuccessDTO.setMessage(CustomizeResponseCode.SUCCESS.getMessage());
         loginSuccessDTO.setToken(token);
         return loginSuccessDTO;
