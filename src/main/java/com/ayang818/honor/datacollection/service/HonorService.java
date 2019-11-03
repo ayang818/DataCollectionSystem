@@ -10,7 +10,6 @@ import com.ayang818.honor.datacollection.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.util.resources.cldr.ext.TimeZoneNames_en_MO;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -319,7 +318,7 @@ public class HonorService {
         Date gmtCreate = new Date(System.currentTimeMillis());
         for (CompetitionExcelDTO competitionExcelDTO : list) {
             CompetitionHonor competitionHonor = new CompetitionHonor();
-            BeanUtils.copyProperties(competitionHonor, competitionExcelDTO);
+            BeanUtils.copyProperties(competitionExcelDTO, competitionHonor);
             competitionHonor.setPass((byte) 2);
             competitionHonor.setGmtCreate(gmtCreate);
             competitionHonor.setGmtModified(gmtCreate);

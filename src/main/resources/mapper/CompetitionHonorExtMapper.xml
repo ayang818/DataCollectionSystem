@@ -28,22 +28,21 @@
 
     <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id">
         insert into competition_honor(id,competition_type,competition_level,competition_year,competition_total_name,student_name,
-                                      grade,school_number,major,college,guidance_teacher,honor_level,message,pass,gmt_create,gmt_modified)
+                                      grade,school_number,team_number,major,college,guidance_teacher,honor_level,message,pass,gmt_create,gmt_modified)
         values(#{id},#{competitionType},#{competitionLevel},#{competitionYear},#{competitionTotalName},
-               #{studentName},#{grade},#{schoolNumber},#{major},#{college},#{guidanceTeacher},#{honorLevel},#{message},#{pass},
+               #{studentName},#{grade},#{schoolNumber},#{teamNumber},#{major},#{college},#{guidanceTeacher},#{honorLevel},#{message},#{pass},
                #{gmtCreate},#{gmtModified})
     </insert>
 
     <insert id="insertList" parameterType="java.util.List" useGeneratedKeys="false">
         insert into competition_honor
         (id,competition_type,competition_level,competition_year,competition_total_name,student_name,
-        grade,school_number,major,college,guidance_teacher,honor_level,message,pass,gmt_create,gmt_modified)
+        grade,school_number,team_number,major,college,guidance_teacher,honor_level,message,pass,gmt_create,gmt_modified)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.id},#{item.competitionType},#{item.competitionLevel},#{item.competitionYear},#{item.competitionTotalName},
-            #{item.studentName},#{item.grade},#{item.schoolNumber},#{item.major},#{item.college},#{item.guidanceTeacher},#{item.honorLevel},#{item.message},#{item.pass},
+            #{item.studentName},#{item.grade},#{item.schoolNumber},#{item.teamNumber},#{item.major},#{item.college},#{item.guidanceTeacher},#{item.honorLevel},#{item.message},#{item.pass},
             #{item.gmtCreate},#{item.gmtModified})
         </foreach>
     </insert>
-
 </mapper>

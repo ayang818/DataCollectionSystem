@@ -7,6 +7,7 @@ import com.ayang818.honor.datacollection.dto.excel.CompetitionExcelDTO;
 import com.ayang818.honor.datacollection.service.HonorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
 @Component
 public class CompetitionExcelDataListener extends AnalysisEventListener<CompetitionExcelDTO> {
 
+    @Autowired
     private HonorService honorService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CompetitionExcelDataListener.class);
