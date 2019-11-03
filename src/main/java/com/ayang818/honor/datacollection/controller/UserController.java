@@ -103,11 +103,17 @@ public class UserController {
             try {
                 userInfoDTO.setUsername(admin.getUsername());
                 userInfoDTO.setType((int) admin.getType());
+                userInfoDTO.setCode(CustomizeResponseCode.SUCCESS.getCode());
             } catch (NullPointerException e) {
                 throw new CustomizeException(CustomizeResponseCode.USER_ISNOT_EXISTS);
             }
         }
         return userInfoDTO;
+    }
+
+    @RequestMapping(value = "/api/user/logout", method = RequestMethod.POST)
+    public String logout() {
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
     @RequestMapping(value = "/api/profile/edit", method = RequestMethod.POST)

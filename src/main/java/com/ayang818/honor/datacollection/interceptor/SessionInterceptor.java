@@ -50,16 +50,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         if (userLoginApi.equals(requestURL) || adminLoginApi.equals(requestURL)) {
             return true;
         }
-
-        String authorization = request.getHeader("Authorization");
-        if (authorization == null) {
-            return false;
-        }
-        String[] tokenList = authorization.split(" ");
-        if (tokenList.length < 2) {
-            return false;
-        }
-        String token = tokenList[1];
+        String token = request.getHeader("X-Token");
         AdminExample adminExample = new AdminExample();
         adminExample.createCriteria().andTokenEqualTo(token);
         List<Admin> admins = adminMapper.selectByExample(adminExample);
