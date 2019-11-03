@@ -50,6 +50,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         if (userLoginApi.equals(requestURL) || adminLoginApi.equals(requestURL)) {
             return true;
         }
+
         String authorization = request.getHeader("Authorization");
         if (authorization == null) {
             return false;
