@@ -10,6 +10,7 @@ import com.ayang818.honor.datacollection.model.UserExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -34,24 +35,25 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Autowired
     private  AdminMapper adminMapper;
 
+    @Value("${url.frontend.login.user.api}")
+    private String userLoginApi;
+
+    @Value("${url.frontend.login.admin.api}")
+    private String adminLoginApi;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(SessionInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
         String requestURL = request.getRequestURI();
-        if ("/api/login/admin".equals(requestURL) || "/api/login/user".equals(requestURL)) {
+        if (!requestURL.contains("/api") || userLoginApi.equals(requestURL) || adminLoginApi.equals(requestURL)) {
             return true;
         }
-        String authorization = request.getHeader("Authorization");
-        if (authorization == null) {
+        String token = request.getHeader("X-Token");
+        if (token == null) {
             return false;
         }
-        String[] tokenList = authorization.split(" ");
-        if (tokenList.length < 2) {
-            return false;
-        }
-        String token = tokenList[1];
         AdminExample adminExample = new AdminExample();
         adminExample.createCriteria().andTokenEqualTo(token);
         List<Admin> admins = adminMapper.selectByExample(adminExample);

@@ -8,7 +8,7 @@ package com.ayang818.honor.datacollection.exception;
  **/
 public enum CustomizeResponseCode implements ICustomizeResponseCode {
     // 请求成功
-    SUCCESS(200, "成功"),
+    SUCCESS(20000, "成功"),
     // 服务端错误
     SERVER_ERROR(500, "服务端错误"),
     READ_EXCEL_FAILED(500, "读取excel错误"),

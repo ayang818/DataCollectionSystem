@@ -2,7 +2,6 @@ package com.ayang818.honor.datacollection.service;
 
 import com.ayang818.honor.datacollection.dto.login.LoginDTO;
 import com.ayang818.honor.datacollection.dto.user.EditProfileReceiveDTO;
-import com.ayang818.honor.datacollection.enumdata.UserDataEnum;
 import com.ayang818.honor.datacollection.exception.CustomizeException;
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
 import com.ayang818.honor.datacollection.mapper.AdminMapper;

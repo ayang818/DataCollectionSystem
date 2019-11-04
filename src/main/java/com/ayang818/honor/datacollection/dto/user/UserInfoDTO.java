@@ -13,4 +13,5 @@ public class UserInfoDTO {
     private String studentName;
     private String username;
     private Integer type;
+    private Integer code;
 }

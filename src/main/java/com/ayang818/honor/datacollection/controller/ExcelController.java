@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @ClassName excelController
@@ -25,17 +26,21 @@ public class ExcelController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExcelController.class);
 
-    @ResponseBody
     @RequestMapping(value = "/api/excel/student", method = RequestMethod.POST)
     public String importStudentExcel(@RequestParam(value = "file") MultipartFile excelFile) throws IOException {
         importExcelService.readStudentExcelFile(excelFile);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
-    @ResponseBody
     @RequestMapping(value = "/api/excel/teacher", method = RequestMethod.POST)
     public String importTeacherExcel(@RequestParam("file") MultipartFile excelFile) throws IOException {
         importExcelService.readTeacherExcelFile(excelFile);
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
+    }
+
+    @RequestMapping(value = "/api/excel/competition", method = RequestMethod.POST)
+    public String importCompetitionExcel(@RequestParam("file") MultipartFile excelFile) throws IOException {
+        importExcelService.readCompetitionExcelFile(excelFile);
         return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 }

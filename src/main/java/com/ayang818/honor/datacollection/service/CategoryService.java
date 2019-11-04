@@ -1,6 +1,6 @@
 package com.ayang818.honor.datacollection.service;
 
-import com.ayang818.honor.datacollection.enumdata.HonorTypeEnum;
+import com.ayang818.honor.datacollection.enumdata.honor.HonorTypeEnum;
 import com.ayang818.honor.datacollection.mapper.CategoryExtMapper;
 import com.ayang818.honor.datacollection.mapper.CategoryMapper;
 import com.ayang818.honor.datacollection.mapper.ClosureTableExtMapper;
@@ -9,9 +9,6 @@ import com.ayang818.honor.datacollection.model.Category;
 import com.ayang818.honor.datacollection.model.CategoryExample;
 import com.ayang818.honor.datacollection.model.ClosureTable;
 import com.ayang818.honor.datacollection.model.ClosureTableExample;
-import io.swagger.annotations.Example;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class CategoryService {
-    public static final Logger LOGGER = LoggerFactory.getLogger(CategoryService.class);
-
     @Autowired
     private ClosureTableMapper closureTableMapper;
 
@@ -100,21 +95,14 @@ public class CategoryService {
         return null;
     }
 
-    public ConcurrentHashMap<String, Object> getCompetitionItem() {
+    public ConcurrentHashMap<String, List> getCompetitionItem() {
         CategoryExample example = new CategoryExample();
         example.createCriteria().andTitleEqualTo(HonorTypeEnum.COMPETITION);
-        // 获取竞赛分类的ID
         List<Category> categories = categoryMapper.selectByExample(example);
         if (categories.size() == 1) {
             Category category = categories.get(0);
             Long parentId = category.getId();
-            // 获取竞赛分类下一层的内容
-            List<ClosureTable> closureTables = closureTableExtMapper.queryDescendant(parentId);
-            ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>();
-            for (ClosureTable closureTable : closureTables) {
-                Category secondRecord = categoryMapper.selectByPrimaryKey(closureTable.getDescendant());
 
-            }
         }
         return null;
     }

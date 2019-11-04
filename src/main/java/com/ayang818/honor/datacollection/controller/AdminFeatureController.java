@@ -1,6 +1,7 @@
 package com.ayang818.honor.datacollection.controller;
 
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
+import com.ayang818.honor.datacollection.mapper.CompetitionHonorMapper;
 import com.ayang818.honor.datacollection.model.*;
 import com.ayang818.honor.datacollection.service.CategoryService;
 import com.ayang818.honor.datacollection.service.HonorService;
@@ -24,12 +25,15 @@ public class AdminFeatureController {
     private HonorService honorService;
 
     @Autowired
+    private CompetitionHonorMapper competitionHonorMapper;
+
+    @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping(value = "/api/honor/detail/competition/{id}", method = RequestMethod.GET)
-    public CompetitionHonor getCompetitionHonorDetail(HttpServletRequest request, @PathVariable Long id) {
-        return honorService.selectByCompetitionHonorId(id);
-    }
+//    @RequestMapping(value = "/api/honor/detail/competition/{id}", method = RequestMethod.GET)
+//    public CompetitionHonor getCompetitionHonorDetail(HttpServletRequest request, @PathVariable Long id) {
+//        return honorService.selectByCompetitionHonorId(id);
+//    }
 
     @RequestMapping(value = "/api/honor/detail/paper/{id}", method = RequestMethod.GET)
     public PaperHonor getPaperHonorDetail(HttpServletRequest request, @PathVariable Long id) {
@@ -46,11 +50,11 @@ public class AdminFeatureController {
         return honorService.selectByAbilityHonorId(id);
     }
 
-    @RequestMapping(value = "/api/honor/judge/competition/{id}", method = RequestMethod.GET)
-    public String setCompetitionPassStatus(HttpServletRequest request, @PathVariable Long id, @RequestParam Integer status) {
-        honorService.setCompetitionPassStatus(id, status);
-        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
-    }
+//    @RequestMapping(value = "/api/honor/judge/competition/{id}", method = RequestMethod.GET)
+//    public String setCompetitionPassStatus(HttpServletRequest request, @PathVariable Long id, @RequestParam Integer status) {
+//        honorService.setCompetitionPassStatus(id, status);
+//        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
+//    }
 
     @RequestMapping(value = "/api/honor/judge/paper/{id}", method = RequestMethod.GET)
     public String setPaperPassStatus(HttpServletRequest request, @PathVariable Long id, @RequestParam Integer status) {

@@ -23,9 +23,9 @@
     </resultMap>
 
     <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id">
-        insert into knowledge_honor(student_name,school_number,pass,teacher_id,teacher_name,honor_type,honor_name,
+        insert into knowledge_honor(id,student_name,school_number,pass,teacher_id,teacher_name,honor_type,honor_name,
                                     register_number,authorization_status,prove,gmt_create,gmt_modified)
-        values(#{studentName},#{schoolNumber},#{pass},#{teacherId},#{teacherName},#{honorType},#{honorName},#{registerNumber},#{authorizationStatus},#{prove},#{gmtCreate},#{gmtModified})
+        values(#{id},#{studentName},#{schoolNumber},#{pass},#{teacherId},#{teacherName},#{honorType},#{honorName},#{registerNumber},#{authorizationStatus},#{prove},#{gmtCreate},#{gmtModified})
     </insert>
 
 </mapper>

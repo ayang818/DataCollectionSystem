@@ -8,23 +8,42 @@
           This element was generated on Sun Oct 27 18:28:02 GMT+08:00 2019.
         -->
         <id column="id" jdbcType="BIGINT" property="id" />
-        <result column="student_name" jdbcType="VARCHAR" property="studentName" />
-        <result column="school_number" jdbcType="INTEGER" property="schoolNumber" />
+        <result column="competition_type" jdbcType="VARCHAR" property="competitionType" />
         <result column="competition_level" jdbcType="VARCHAR" property="competitionLevel" />
-        <result column="competition_name" jdbcType="VARCHAR" property="competitionName" />
-        <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
-        <result column="teacher_id" jdbcType="BIGINT" property="teacherId" />
+        <result column="competition_year" jdbcType="VARCHAR" property="competitionYear" />
+        <result column="competition_total_name" jdbcType="VARCHAR" property="competitionTotalName" />
+        <result column="team_number" jdbcType="VARCHAR" property="teamNumber" />
+        <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+        <result column="grade" jdbcType="VARCHAR" property="grade" />
+        <result column="school_number" jdbcType="VARCHAR" property="schoolNumber" />
+        <result column="major" jdbcType="VARCHAR" property="major" />
+        <result column="college" jdbcType="VARCHAR" property="college" />
+        <result column="guidance_teacher" jdbcType="VARCHAR" property="guidanceTeacher" />
         <result column="honor_level" jdbcType="VARCHAR" property="honorLevel" />
-        <result column="prove" jdbcType="VARCHAR" property="prove" />
+        <result column="message" jdbcType="VARCHAR" property="message" />
         <result column="pass" jdbcType="TINYINT" property="pass" />
         <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     </resultMap>
 
     <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id">
-        insert into competition_honor(student_name,school_number,competition_level,competition_name,teacher_name,teacher_id,honor_level,
-                                      prove,pass,gmt_create,gmt_modified)
-        values(#{studentName},#{schoolNumber},#{competitionLevel},#{competitionName},#{teacherName},#{teacherId},#{honorLevel},#{prove},#{pass},#{gmtCreate},#{gmtModified})
+        insert into competition_honor(id,competition_type,competition_level,competition_year,competition_total_name,student_name,
+                                      grade,school_number,team_number,major,college,guidance_teacher,honor_level,message,pass,gmt_create,gmt_modified)
+        values(#{id},#{competitionType},#{competitionLevel},#{competitionYear},#{competitionTotalName},
+               #{studentName},#{grade},#{schoolNumber},#{teamNumber},#{major},#{college},#{guidanceTeacher},#{honorLevel},#{message},#{pass},
+               #{gmtCreate},#{gmtModified})
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" useGeneratedKeys="false">
+        insert into competition_honor
+        (id,competition_type,competition_level,competition_year,competition_total_name,student_name,
+        grade,school_number,team_number,major,college,guidance_teacher,honor_level,message,pass,gmt_create,gmt_modified)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id},#{item.competitionType},#{item.competitionLevel},#{item.competitionYear},#{item.competitionTotalName},
+            #{item.studentName},#{item.grade},#{item.schoolNumber},#{item.teamNumber},#{item.major},#{item.college},#{item.guidanceTeacher},#{item.honorLevel},#{item.message},#{item.pass},
+            #{item.gmtCreate},#{item.gmtModified})
+        </foreach>
     </insert>
 
 </mapper>

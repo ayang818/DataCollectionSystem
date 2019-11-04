@@ -40,7 +40,7 @@ public class UserController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping(value = "/api/login/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/user/login", method = RequestMethod.POST)
     public Object loginAsUser(@RequestBody LoginDTO loginDTO) {
         // 检查学生数据库中有没有这个学号
         Student student = registerService.checkIfUserExists(loginDTO);
@@ -51,7 +51,7 @@ public class UserController {
         String token = userService.checkIfFirstLogin(loginDTO);
         if (token != null) {
             LoginSuccessDTO loginSuccessDTO = new LoginSuccessDTO();
-            loginSuccessDTO.setCode(200);
+            loginSuccessDTO.setCode(CustomizeResponseCode.SUCCESS.getCode());
             loginSuccessDTO.setMessage(CustomizeResponseCode.SUCCESS.getMessage());
             loginSuccessDTO.setToken(token);
             return loginSuccessDTO;
@@ -68,18 +68,18 @@ public class UserController {
         user.setToken(token1);
         userService.insert(user);
         LoginSuccessDTO loginSuccessDTO = new LoginSuccessDTO();
-        loginSuccessDTO.setCode(200);
+        loginSuccessDTO.setCode(CustomizeResponseCode.SUCCESS.getCode());
         loginSuccessDTO.setMessage(CustomizeResponseCode.SUCCESS.getMessage());
         loginSuccessDTO.setToken(token1);
         return loginSuccessDTO;
     }
 
-    @RequestMapping(value = "/api/login/admin", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/admin/login", method = RequestMethod.POST)
     public Object loginAsAdmin(@RequestBody LoginDTO loginDTO) {
         // 管理员权限登陆
         String token = adminService.checkIfExists(loginDTO);
         LoginSuccessDTO loginSuccessDTO = new LoginSuccessDTO();
-        loginSuccessDTO.setCode(200);
+        loginSuccessDTO.setCode(CustomizeResponseCode.SUCCESS.getCode());
         loginSuccessDTO.setMessage(CustomizeResponseCode.SUCCESS.getMessage());
         loginSuccessDTO.setToken(token);
         return loginSuccessDTO;
@@ -103,11 +103,17 @@ public class UserController {
             try {
                 userInfoDTO.setUsername(admin.getUsername());
                 userInfoDTO.setType((int) admin.getType());
+                userInfoDTO.setCode(CustomizeResponseCode.SUCCESS.getCode());
             } catch (NullPointerException e) {
                 throw new CustomizeException(CustomizeResponseCode.USER_ISNOT_EXISTS);
             }
         }
         return userInfoDTO;
+    }
+
+    @RequestMapping(value = "/api/user/logout", method = RequestMethod.POST)
+    public String logout() {
+        return JSONUtil.parseEnumToJson(CustomizeResponseCode.SUCCESS);
     }
 
     @RequestMapping(value = "/api/profile/edit", method = RequestMethod.POST)
