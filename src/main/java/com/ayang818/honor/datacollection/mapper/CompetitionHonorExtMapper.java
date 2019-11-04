@@ -8,4 +8,5 @@ public interface CompetitionHonorExtMapper {
     void insertAndGetId(CompetitionHonor competitionHonor);
 
     void insertList(List<CompetitionHonor> tempList);
+
 }

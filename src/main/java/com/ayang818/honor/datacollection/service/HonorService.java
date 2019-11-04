@@ -28,9 +28,6 @@ public class HonorService {
     private TotalHonorMapper totalHonorMapper;
 
     @Autowired
-    private CompetitionHonorMapper competitionHonorMapper;
-
-    @Autowired
     private PaperHonorMapper paperHonorMapper;
 
     @Autowired
@@ -41,9 +38,6 @@ public class HonorService {
 
     @Autowired
     private GraduationMapper graduationMapper;
-
-    @Autowired
-    private CompetitionHonorExtMapper competitionExtHonorMapper;
 
     @Autowired
     private PaperHonorExtMapper paperHonorExtMapper;
@@ -78,49 +72,49 @@ public class HonorService {
     }
 
 
-    public void insertOrUpdateCompetitionHonor(User user, CompetitionHonorReceiveDTO receiveDTO, Long id) {
-        CompetitionHonor competitionHonor;
-        if (id != null) {
-            competitionHonor = competitionHonorMapper.selectByPrimaryKey(id);
-            competitionHonor.setCompetitionLevel(receiveDTO.getCompetitionLevel());
-            competitionHonor.setCompetitionTotalName(receiveDTO.getCompetitionName());
-            competitionHonor.setHonorLevel(receiveDTO.getHonorLevel());
-            // competitionHonor.setProve(null);
-            competitionHonor.setGuidanceTeacher(receiveDTO.getTeacherName());
-            // 待完成
-            // competitionHonor.setTeacherId(null);
-            competitionHonor.setSchoolNumber(String.valueOf(user.getUsername()));
-            competitionHonor.setStudentName(user.getStudentName());
-            competitionHonor.setGmtModified(new Date(System.currentTimeMillis()));
-            competitionHonor.setPass((byte) 1);
-            competitionHonorMapper.updateByPrimaryKey(competitionHonor);
-            updateTotalTable(receiveDTO.getCompetitionName() + " " + receiveDTO.getHonorLevel(), HonorTypeEnum.COMPETITION_TYPE,competitionHonor.getId());
-            return;
-        } else {
-            competitionHonor = new CompetitionHonor();
-        }
-        competitionHonor.setCompetitionLevel(receiveDTO.getCompetitionLevel());
-        competitionHonor.setCompetitionTotalName(receiveDTO.getCompetitionName());
-        competitionHonor.setHonorLevel(receiveDTO.getHonorLevel());
-        // competitionHonor.setProve(null);
-        competitionHonor.setGuidanceTeacher(receiveDTO.getTeacherName());
-        // 待完成
-        // competitionHonor.setTeacherId(null);
-        competitionHonor.setSchoolNumber(String.valueOf(user.getUsername()));
-        competitionHonor.setStudentName(user.getStudentName());
-        competitionHonor.setGmtCreate(new Date(System.currentTimeMillis()));
-        competitionHonor.setGmtModified(competitionHonor.getGmtCreate());
-        competitionHonor.setPass((byte) 1);
-        competitionExtHonorMapper.insertAndGetId(competitionHonor);
-        TotalHonor totalHonor = new TotalHonor();
-        totalHonor.setDetailId(competitionHonor.getId());
-        totalHonor.setHonorName(receiveDTO.getCompetitionName() + " " + receiveDTO.getHonorLevel());
-        totalHonor.setType(1);
-        totalHonor.setPass((byte) 1);
-        totalHonor.setSchoolNumber(user.getUsername());
-        totalHonor.setStudentName(user.getStudentName());
-        totalHonorMapper.insert(totalHonor);
-    }
+//    public void insertOrUpdateCompetitionHonor(User user, CompetitionHonorReceiveDTO receiveDTO, Long id) {
+//        CompetitionHonor competitionHonor;
+//        if (id != null) {
+//            competitionHonor = competitionHonorMapper.selectByPrimaryKey(id);
+//            competitionHonor.setCompetitionLevel(receiveDTO.getCompetitionLevel());
+//            competitionHonor.setCompetitionTotalName(receiveDTO.getCompetitionName());
+//            competitionHonor.setHonorLevel(receiveDTO.getHonorLevel());
+//            // competitionHonor.setProve(null);
+//            competitionHonor.setGuidanceTeacher(receiveDTO.getTeacherName());
+//            // 待完成
+//            // competitionHonor.setTeacherId(null);
+//            competitionHonor.setSchoolNumber(String.valueOf(user.getUsername()));
+//            competitionHonor.setStudentName(user.getStudentName());
+//            competitionHonor.setGmtModified(new Date(System.currentTimeMillis()));
+//            competitionHonor.setPass((byte) 1);
+//            competitionHonorMapper.updateByPrimaryKey(competitionHonor);
+//            updateTotalTable(receiveDTO.getCompetitionName() + " " + receiveDTO.getHonorLevel(), HonorTypeEnum.COMPETITION_TYPE,competitionHonor.getId());
+//            return;
+//        } else {
+//            competitionHonor = new CompetitionHonor();
+//        }
+//        competitionHonor.setCompetitionLevel(receiveDTO.getCompetitionLevel());
+//        competitionHonor.setCompetitionTotalName(receiveDTO.getCompetitionName());
+//        competitionHonor.setHonorLevel(receiveDTO.getHonorLevel());
+//        // competitionHonor.setProve(null);
+//        competitionHonor.setGuidanceTeacher(receiveDTO.getTeacherName());
+//        // 待完成
+//        // competitionHonor.setTeacherId(null);
+//        competitionHonor.setSchoolNumber(String.valueOf(user.getUsername()));
+//        competitionHonor.setStudentName(user.getStudentName());
+//        competitionHonor.setGmtCreate(new Date(System.currentTimeMillis()));
+//        competitionHonor.setGmtModified(competitionHonor.getGmtCreate());
+//        competitionHonor.setPass((byte) 1);
+//        competitionExtHonorMapper.insertAndGetId(competitionHonor);
+//        TotalHonor totalHonor = new TotalHonor();
+//        totalHonor.setDetailId(competitionHonor.getId());
+//        totalHonor.setHonorName(receiveDTO.getCompetitionName() + " " + receiveDTO.getHonorLevel());
+//        totalHonor.setType(1);
+//        totalHonor.setPass((byte) 1);
+//        totalHonor.setSchoolNumber(user.getUsername());
+//        totalHonor.setStudentName(user.getStudentName());
+//        totalHonorMapper.insert(totalHonor);
+//    }
 
     public void insertOrUpdatePaperHonor(User user, PaperHonorReceiveDTO receiveDTO, Long id) {
         PaperHonor paperHonor;
@@ -256,9 +250,9 @@ public class HonorService {
         graduationMapper.insert(graduation);
     }
 
-    public CompetitionHonor selectByCompetitionHonorId(Long id) {
-        return competitionHonorMapper.selectByPrimaryKey(id);
-    }
+//    public CompetitionHonor selectByCompetitionHonorId(Long id) {
+//        return competitionHonorMapper.selectByPrimaryKey(id);
+//    }
 
     public PaperHonor selectByPaperHonorId(Long id) {
         return paperHonorMapper.selectByPrimaryKey(id);
@@ -285,12 +279,12 @@ public class HonorService {
         throw new CustomizeException(CustomizeResponseCode.NO_SUCH_RECORD);
     }
 
-    public void setCompetitionPassStatus(Long id, int status) {
-        CompetitionHonor competitionHonor = competitionHonorMapper.selectByPrimaryKey(id);
-        competitionHonor.setPass((byte) status);
-        competitionHonorMapper.updateByPrimaryKey(competitionHonor);
-        updateTotalPassStatus(id, status, HonorTypeEnum.COMPETITION_TYPE);
-    }
+//    public void setCompetitionPassStatus(Long id, int status) {
+//        CompetitionHonor competitionHonor = competitionHonorMapper.selectByPrimaryKey(id);
+//        competitionHonor.setPass((byte) status);
+//        competitionHonorMapper.updateByPrimaryKey(competitionHonor);
+//        updateTotalPassStatus(id, status, HonorTypeEnum.COMPETITION_TYPE);
+//    }
 
     public void setPaperPassStatus(Long id, int status) {
         PaperHonor paperHonor = paperHonorMapper.selectByPrimaryKey(id);
@@ -313,17 +307,5 @@ public class HonorService {
         updateTotalPassStatus(id, status, HonorTypeEnum.ABILITY_TYPE);
     }
 
-    public void insertCompetitionHonorFromExcel(List<CompetitionExcelDTO> list) {
-        List<CompetitionHonor> tempList = new ArrayList<>(300);
-        Date gmtCreate = new Date(System.currentTimeMillis());
-        for (CompetitionExcelDTO competitionExcelDTO : list) {
-            CompetitionHonor competitionHonor = new CompetitionHonor();
-            BeanUtils.copyProperties(competitionExcelDTO, competitionHonor);
-            competitionHonor.setPass((byte) 2);
-            competitionHonor.setGmtCreate(gmtCreate);
-            competitionHonor.setGmtModified(gmtCreate);
-            tempList.add(competitionHonor);
-        }
-        competitionExtHonorMapper.insertList(tempList);
-    }
+
 }

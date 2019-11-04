@@ -5,6 +5,7 @@ import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
 import com.ayang818.honor.datacollection.dto.excel.CompetitionExcelDTO;
 import com.ayang818.honor.datacollection.service.HonorService;
+import com.ayang818.honor.datacollection.service.honor.CompetitionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import java.util.List;
 public class CompetitionExcelDataListener extends AnalysisEventListener<CompetitionExcelDTO> {
 
     @Autowired
-    private HonorService honorService;
+    private CompetitionService competitionService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CompetitionExcelDataListener.class);
     /**
@@ -54,7 +55,7 @@ public class CompetitionExcelDataListener extends AnalysisEventListener<Competit
      */
     private void saveData() {
         LOGGER.info("{}条数据，开始存储数据库！", list.size());
-        honorService.insertCompetitionHonorFromExcel(list);
+        competitionService.insertCompetitionHonorFromExcel(list);
         LOGGER.info("存储数据库成功！");
     }
 }

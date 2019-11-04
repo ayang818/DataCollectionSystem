@@ -45,4 +45,5 @@
             #{item.gmtCreate},#{item.gmtModified})
         </foreach>
     </insert>
+
 </mapper>
