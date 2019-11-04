@@ -3,6 +3,7 @@ package com.ayang818.honor.datacollection.controller.honor;
 import com.ayang818.honor.datacollection.dto.Result;
 import com.ayang818.honor.datacollection.exception.CustomizeResponseCode;
 import com.ayang818.honor.datacollection.exception.ICustomizeResponseCode;
+import com.ayang818.honor.datacollection.model.CompetitionHonor;
 import com.ayang818.honor.datacollection.service.honor.CompetitionService;
 import com.ayang818.honor.datacollection.util.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class CompetitionController {
     private CompetitionService competitionService;
 
     @RequestMapping(value = "/api/admin/honor/competition/list", method = RequestMethod.GET)
-    public List<?> list(@RequestParam(value = "limit") Integer limit, @RequestParam(value = "offset") Integer offset) {
+    public List<CompetitionHonor> list(@RequestParam(value = "limit") Integer limit, @RequestParam(value = "offset") Integer offset) {
         return competitionService.list(limit, offset);
     }
 

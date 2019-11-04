@@ -47,10 +47,13 @@ public class SessionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
         String requestURL = request.getRequestURI();
-        if (userLoginApi.equals(requestURL) || adminLoginApi.equals(requestURL)) {
+        if (!requestURL.contains("/api") || userLoginApi.equals(requestURL) || adminLoginApi.equals(requestURL)) {
             return true;
         }
         String token = request.getHeader("X-Token");
+        if (token == null) {
+            return false;
+        }
         AdminExample adminExample = new AdminExample();
         adminExample.createCriteria().andTokenEqualTo(token);
         List<Admin> admins = adminMapper.selectByExample(adminExample);
