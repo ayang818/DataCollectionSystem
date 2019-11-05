@@ -2,7 +2,6 @@ package com.ayang818.honor.datacollection.service.honor;
 
 import com.ayang818.honor.datacollection.dto.excel.CompetitionExcelDTO;
 import com.ayang818.honor.datacollection.dto.honor.CompetitionSearchDTO;
-import com.ayang818.honor.datacollection.enumdata.honor.Competition;
 import com.ayang818.honor.datacollection.mapper.CompetitionHonorExtMapper;
 import com.ayang818.honor.datacollection.mapper.CompetitionHonorMapper;
 import com.ayang818.honor.datacollection.model.CompetitionHonor;
@@ -57,13 +56,26 @@ public class CompetitionService {
     }
 
     public List<CompetitionHonor> searchByKeyWord(CompetitionSearchDTO competitionSearchDTO) {
-        List<CompetitionHonor> resList = new ArrayList<>(32);
+        List<CompetitionHonor> tempList = new ArrayList<>(32);
         CompetitionHonorExample studentNameExample = new CompetitionHonorExample();
         studentNameExample.createCriteria().andStudentNameLike("%" + competitionSearchDTO.getKeyword() + "%");
-        resList.addAll(competitionHonorMapper.selectByExample(studentNameExample));
+        tempList.addAll(competitionHonorMapper.selectByExample(studentNameExample));
         CompetitionHonorExample teacherNameExample = new CompetitionHonorExample();
         teacherNameExample.createCriteria().andGuidanceTeacherLike("%"+competitionSearchDTO.getKeyword()+"%");
-        resList.addAll(competitionHonorMapper.selectByExample(teacherNameExample));
+        tempList.addAll(competitionHonorMapper.selectByExample(teacherNameExample));
+        Integer num = 0;
+        Integer limit = competitionSearchDTO.getLimit();
+        Integer offset = competitionSearchDTO.getOffset();
+        List<CompetitionHonor> resList = new ArrayList<>(limit);
+        for (int i = 0; i < tempList.size(); i++) {
+            if (i >= offset) {
+                resList.add(tempList.get(i));
+                num+=1;
+            }
+            if (num >= limit) {
+                break;
+            }
+        }
         return resList;
     }
 
