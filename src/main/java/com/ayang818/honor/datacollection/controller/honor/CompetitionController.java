@@ -36,7 +36,7 @@ public class CompetitionController {
         return competitionService.searchByKeyWord(competitionSearchDTO);
     }
 
-    @RequestMapping(value = "/api/admin/honor/competition/countsearch", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/admin/honor/competition/countBySearch", method = RequestMethod.GET)
     public Long countByKeyword(@RequestParam("keyword") String keyword) {
         return competitionService.countByKeyword(keyword);
     }

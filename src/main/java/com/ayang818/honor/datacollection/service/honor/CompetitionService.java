@@ -63,7 +63,7 @@ public class CompetitionService {
         resList.addAll(competitionHonorMapper.selectByExample(studentNameExample));
         CompetitionHonorExample teacherNameExample = new CompetitionHonorExample();
         teacherNameExample.createCriteria().andGuidanceTeacherLike("%"+competitionSearchDTO.getKeyword()+"%");
-        competitionHonorMapper.selectByExample(teacherNameExample);
+        resList.addAll(competitionHonorMapper.selectByExample(teacherNameExample));
         return resList;
     }
 
