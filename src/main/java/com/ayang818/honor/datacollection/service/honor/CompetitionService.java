@@ -1,11 +1,15 @@
 package com.ayang818.honor.datacollection.service.honor;
 
 import com.ayang818.honor.datacollection.dto.excel.CompetitionExcelDTO;
+import com.ayang818.honor.datacollection.dto.honor.CompetitionSearchDTO;
+import com.ayang818.honor.datacollection.enumdata.honor.Competition;
 import com.ayang818.honor.datacollection.mapper.CompetitionHonorExtMapper;
 import com.ayang818.honor.datacollection.mapper.CompetitionHonorMapper;
 import com.ayang818.honor.datacollection.model.CompetitionHonor;
 import com.ayang818.honor.datacollection.model.CompetitionHonorExample;
 import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,8 @@ import java.util.List;
  **/
 @Service
 public class CompetitionService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CompetitionService.class);
+
     @Autowired
     private CompetitionHonorMapper competitionHonorMapper;
 
@@ -48,5 +54,27 @@ public class CompetitionService {
 
     public Long count() {
         return competitionHonorMapper.countByExample(new CompetitionHonorExample());
+    }
+
+    public List<CompetitionHonor> searchByKeyWord(CompetitionSearchDTO competitionSearchDTO) {
+        List<CompetitionHonor> resList = new ArrayList<>(32);
+        CompetitionHonorExample studentNameExample = new CompetitionHonorExample();
+        studentNameExample.createCriteria().andStudentNameLike("%" + competitionSearchDTO.getKeyword() + "%");
+        resList.addAll(competitionHonorMapper.selectByExample(studentNameExample));
+        CompetitionHonorExample teacherNameExample = new CompetitionHonorExample();
+        teacherNameExample.createCriteria().andGuidanceTeacherLike("%"+competitionSearchDTO.getKeyword()+"%");
+        competitionHonorMapper.selectByExample(teacherNameExample);
+        return resList;
+    }
+
+    public Long countByKeyword(String keyword) {
+        Long res = 0L;
+        CompetitionHonorExample teacherNameExample = new CompetitionHonorExample();
+        teacherNameExample.createCriteria().andGuidanceTeacherLike("%"+keyword+"%");
+        res += competitionHonorMapper.countByExample(teacherNameExample);
+        CompetitionHonorExample studentNameExample = new CompetitionHonorExample();
+        studentNameExample.createCriteria().andStudentNameLike("%"+keyword+"%");
+        res += competitionHonorMapper.countByExample(studentNameExample);
+        return res;
     }
 }

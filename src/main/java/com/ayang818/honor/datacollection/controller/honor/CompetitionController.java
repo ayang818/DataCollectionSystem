@@ -1,12 +1,11 @@
 package com.ayang818.honor.datacollection.controller.honor;
 
+import com.ayang818.honor.datacollection.dto.honor.CompetitionHonorReceiveDTO;
+import com.ayang818.honor.datacollection.dto.honor.CompetitionSearchDTO;
 import com.ayang818.honor.datacollection.model.CompetitionHonor;
 import com.ayang818.honor.datacollection.service.honor.CompetitionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +29,15 @@ public class CompetitionController {
     public Long count() {
         Long count = competitionService.count();
         return count;
+    }
+
+    @RequestMapping(value = "/api/admin/honor/competition/search", method = RequestMethod.POST)
+    public List<CompetitionHonor> search(@RequestBody CompetitionSearchDTO competitionSearchDTO){
+        return competitionService.searchByKeyWord(competitionSearchDTO);
+    }
+
+    @RequestMapping(value = "/api/admin/honor/competition/countsearch", method = RequestMethod.GET)
+    public Long countByKeyword(@RequestParam("keyword") String keyword) {
+        return competitionService.countByKeyword(keyword);
     }
 }
