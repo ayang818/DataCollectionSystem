@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,6 +85,9 @@ public class CompetitionService {
         CompetitionHonorExample teacherNameExample = new CompetitionHonorExample();
         teacherNameExample.createCriteria().andGuidanceTeacherLike("%"+keyword+"%");
         res += competitionHonorMapper.countByExample(teacherNameExample);
+        if ("".equals(keyword)) {
+            return res;
+        }
         CompetitionHonorExample studentNameExample = new CompetitionHonorExample();
         studentNameExample.createCriteria().andStudentNameLike("%"+keyword+"%");
         res += competitionHonorMapper.countByExample(studentNameExample);
